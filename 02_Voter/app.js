@@ -6,7 +6,7 @@ const app = Vue.createApp({
         };
     },
     methods: {
-        upvote(event) {
+        upvote() {
             this.submissions[0].votes++;
         },
         logConsole(text) {
