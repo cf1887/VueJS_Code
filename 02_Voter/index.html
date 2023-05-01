@@ -36,7 +36,7 @@
                           {{ submissions[0].title }}
                           <span class="float-end text-primary"
                           style="cursor: pointer"
-                          v-on:click="upvote('Moin', $event)"
+                          v-on:click="upvote($event), logConsole('Moin')"
                             ><i class="fa fa-chevron-up"></i>
                             <strong>{{ submissions[0].votes }}</strong></span
                           >

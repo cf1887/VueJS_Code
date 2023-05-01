@@ -6,11 +6,12 @@ const app = Vue.createApp({
         };
     },
     methods: {
-        upvote(info, event) {
+        upvote(event) {
             this.submissions[0].votes++;
-            console.log(info);
-            console.log(event);
         },
+        logConsole(text) {
+            console.log(text);
+        }
     }
 });
 
