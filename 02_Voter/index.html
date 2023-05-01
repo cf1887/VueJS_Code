@@ -35,9 +35,8 @@
                           <img v-bind:src="submission.img" alt="" />
                         </div>
                         <div class="flex-grow-1 ms-3">
-                          <!-- <h5 v-once> -->
                           <h5>
-                            {{ submission.title }} {{ index }}
+                            {{ submission.title }}
                             <span class="float-end text-primary"
                             style="cursor: pointer"
                             v-on:click="upvote(submission.id)"
@@ -45,14 +44,7 @@
                               <strong>{{ submission.votes }}</strong></span
                             >
                           </h5>
-                          <!-- <div>{{ submission.desc }}</div> -->
-                          <!-- Zum Anzeigen von gerendertem HTML-Code: v-html (ACHTUNG: Cross-Site-Scripting-Warnung!!!) -->
-                          <!-- Das Gegenteil davon ist: v-pre (Interpretiert keinesfalls HTML-Code) -->
                           <div v-html="submission.desc"></div>
-                          <!-- <ul> -->
-                            <!-- Iteration über alle Objekt-Properties (wieder mit optionalen Parametern 'key' und 'index' - wie bei Php foreach) -->
-                            <!-- <li v-for="(value, key, index) in submission">{{ index }} - {{ key }} - {{ value }}</li>
-                          </ul> -->
                           <small class="text-muted">Eingereicht von: {{ submission.author }}</small>
                         </div>
                       </div>
