@@ -23,7 +23,9 @@
               <div class="col-xl-4 offset-xl-4">
                 <div class="card mt-5">
                   <div class="card-header">
-                    <h2 class="card-title">Stimme jetzt ab!</h2>
+                    <h2 class="card-title">Stimme jetzt ab!
+                      <span class="float-end">{{ totalVotes() }} Stimmen</span>
+                    </h2>
                   </div>
                   <div class="card-body">
                     <div class="d-flex">
@@ -36,7 +38,7 @@
                           {{ submissions[0].title }}
                           <span class="float-end text-primary"
                           style="cursor: pointer"
-                          v-on:click.right="upvote()"
+                          v-on:click="upvote()"
                             ><i class="fa fa-chevron-up"></i>
                             <strong>{{ submissions[0].votes }}</strong></span
                           >

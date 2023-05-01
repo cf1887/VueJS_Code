@@ -11,7 +11,15 @@ const app = Vue.createApp({
         },
         logConsole(text) {
             console.log(text);
-        }
+        },
+        /**
+         * Berechne die Gesamtmenge aller Votes aller Einträge
+         */
+        totalVotes() {
+            return this.submissions.reduce((totalVotes, submission) => {
+                return totalVotes + submission.votes;
+            }, 0);
+        },
     }
 });
 
