@@ -29,10 +29,6 @@ const app = Vue.createApp({
     },
     // Methoden
     methods: {
-        upvote(submissionId) {
-            const submission = this.submissions.find((submission) => submission.id === submissionId);
-            submission.votes++;
-        },
     },
     // Watcher / (Daten-) Beobachter
     watch: {
@@ -43,6 +39,11 @@ const app = Vue.createApp({
 app.component('SubmissionListItem', {
     // Optionen
     props: ['submission'],
+    methods: {
+        upvote() {
+            this.submission.votes++;
+        },
+    },
     template: `
         <div class="d-flex">
             <div class="d-shrink-0">
@@ -53,7 +54,7 @@ app.component('SubmissionListItem', {
                 {{ submission.title }}
                 <span class="float-end text-primary"
                 style="cursor: pointer"
-                v-on:click="upvote(submission.id)"
+                v-on:click="upvote()"
                     ><i class="fa fa-chevron-up"></i>
                     <strong>{{ submission.votes }}</strong></span
                 >
