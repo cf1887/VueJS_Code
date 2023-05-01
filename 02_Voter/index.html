@@ -31,7 +31,7 @@
                       <!-- <div class="d-flex" v-for="submission in submissions"> -->
                       <!-- Man kann aber auch auf den Index mithilfe der nachfolgenden Schreibweise zugreifen: -->
                       <!-- Mit dem v-bind:key wird ein EINDEUTIGER Schlüssel pro Eintrag vergeben, in diesem Fall die ID des Objekts -->
-                    <div class="d-flex" v-for="(submission, index) in submissions" v-bind:key="submission.id">
+                    <div class="d-flex" v-for="(submission, index) in sortedSubmissions" v-bind:key="submission.id">
                       <div class="d-shrink-0">
                         <img v-bind:src="submission.img" alt="" />
                       </div>

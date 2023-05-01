@@ -15,16 +15,13 @@ const app = Vue.createApp({
      * Ist 'totalVotes()' eine Methode (methods), wird sie bei JEDER Änderung ausgeführt.
      * Ist 'totalVotes()' aber ein computed-Value (computed), wird sie nur bei tatsächlichen Änderungen ausgeführt.
      */ 
-    // computed: {
-    //     /**
-    //      * Berechne die Gesamtmenge aller Votes aller Einträge.
-    //      */
-    //     totalVotes() {
-    //         return this.submissions.reduce((totalVotes, submission) => {
-    //             return totalVotes + submission.votes;
-    //         }, 0);
-    //     },
-    // },
+    computed: {
+        sortedSubmissions() {
+            return this.submissions.sort((a, b) => {
+                return b.votes - a.votes;
+            });
+        }
+    },
     // Methoden
     methods: {
         upvote() {
