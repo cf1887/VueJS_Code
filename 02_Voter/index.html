@@ -22,15 +22,15 @@
             <div class="row">
               <div class="col-xl-4 offset-xl-4">
                 <div class="card mt-5">
-                  <div class="card-header" v-bind:class="cardHeaderBackgroundColor">
-                    <h2 class="card-title" v-bind:style="cardTitleFontSize">Stimme jetzt ab!
+                  <div class="card-header" :class="cardHeaderBackgroundColor">
+                    <h2 class="card-title" :style="cardTitleFontSize">Stimme jetzt ab!
                       <span class="float-end">{{ totalVotes }} Stimmen</span>
                     </h2>
                   </div>
                   <div class="card-body">
                     <!-- Vorteil bei Verwendung vom Template-Tag: Es fliegt nach dem Rendern raus aus dem ausgelieferten Quellcode! -->
-                    <template v-for="(submission, index) in sortedSubmissions" v-bind:key="submission.id">
-                      <submission-list-item v-bind:submission="submission"></submission-list-item>
+                    <template v-for="(submission, index) in sortedSubmissions" :key="submission.id">
+                      <submission-list-item :submission="submission"></submission-list-item>
                       <hr />
                     </template>
                   </div>
