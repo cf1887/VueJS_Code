@@ -28,35 +28,36 @@
                     </h2>
                   </div>
                   <div class="card-body">
-                      <!-- <div class="d-flex" v-for="submission in submissions"> -->
-                      <!-- Man kann aber auch auf den Index mithilfe der nachfolgenden Schreibweise zugreifen: -->
-                      <!-- Mit dem v-bind:key wird ein EINDEUTIGER Schlüssel pro Eintrag vergeben, in diesem Fall die ID des Objekts -->
-                    <div class="d-flex" v-for="(submission, index) in sortedSubmissions" v-bind:key="submission.id">
-                      <div class="d-shrink-0">
-                        <img v-bind:src="submission.img" alt="" />
+                    <!-- Vorteil bei Verwendung vom Template-Tag: Es fliegt nach dem Rendern raus aus dem ausgelieferten Quellcode! -->
+                    <template v-for="(submission, index) in sortedSubmissions" v-bind:key="submission.id">
+                      <div class="d-flex">
+                        <div class="d-shrink-0">
+                          <img v-bind:src="submission.img" alt="" />
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                          <!-- <h5 v-once> -->
+                          <h5>
+                            {{ submission.title }} {{ index }}
+                            <span class="float-end text-primary"
+                            style="cursor: pointer"
+                            v-on:click="upvote(submission.id)"
+                              ><i class="fa fa-chevron-up"></i>
+                              <strong>{{ submission.votes }}</strong></span
+                            >
+                          </h5>
+                          <!-- <div>{{ submission.desc }}</div> -->
+                          <!-- Zum Anzeigen von gerendertem HTML-Code: v-html (ACHTUNG: Cross-Site-Scripting-Warnung!!!) -->
+                          <!-- Das Gegenteil davon ist: v-pre (Interpretiert keinesfalls HTML-Code) -->
+                          <div v-html="submission.desc"></div>
+                          <!-- <ul> -->
+                            <!-- Iteration über alle Objekt-Properties (wieder mit optionalen Parametern 'key' und 'index' - wie bei Php foreach) -->
+                            <!-- <li v-for="(value, key, index) in submission">{{ index }} - {{ key }} - {{ value }}</li>
+                          </ul> -->
+                          <small class="text-muted">Eingereicht von: {{ submission.author }}</small>
+                        </div>
                       </div>
-                      <div class="flex-grow-1 ms-3">
-                        <!-- <h5 v-once> -->
-                        <h5>
-                          {{ submission.title }} {{ index }}
-                          <span class="float-end text-primary"
-                          style="cursor: pointer"
-                          v-on:click="upvote(submission.id)"
-                            ><i class="fa fa-chevron-up"></i>
-                            <strong>{{ submission.votes }}</strong></span
-                          >
-                        </h5>
-                        <!-- <div>{{ submission.desc }}</div> -->
-                        <!-- Zum Anzeigen von gerendertem HTML-Code: v-html (ACHTUNG: Cross-Site-Scripting-Warnung!!!) -->
-                        <!-- Das Gegenteil davon ist: v-pre (Interpretiert keinesfalls HTML-Code) -->
-                        <div v-html="submission.desc"></div>
-                        <!-- <ul> -->
-                          <!-- Iteration über alle Objekt-Properties (wieder mit optionalen Parametern 'key' und 'index' - wie bei Php foreach) -->
-                          <!-- <li v-for="(value, key, index) in submission">{{ index }} - {{ key }} - {{ value }}</li>
-                        </ul> -->
-                        <small class="text-muted">Eingereicht von: {{ submission.author }}</small>
-                      </div>
-                    </div>
+                      <hr />
+                    </template>
                   </div>
                 </div>
               </div>
