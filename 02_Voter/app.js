@@ -2,7 +2,8 @@ const app = Vue.createApp({
     // Optionen (auch globale Variablen)
     data: function() {
         return {
-            submissions: submissions // aus seed.js 
+            submissions: submissions, // aus seed.js 
+            totalVotes: 0,
         };
     },
     /**
@@ -14,16 +15,16 @@ const app = Vue.createApp({
      * Ist 'totalVotes()' eine Methode (methods), wird sie bei JEDER Änderung ausgeführt.
      * Ist 'totalVotes()' aber ein computed-Value (computed), wird sie nur bei tatsächlichen Änderungen ausgeführt.
      */ 
-    computed: {
-        /**
-         * Berechne die Gesamtmenge aller Votes aller Einträge.
-         */
-        totalVotes() {
-            return this.submissions.reduce((totalVotes, submission) => {
-                return totalVotes + submission.votes;
-            }, 0);
-        },
-    },
+    // computed: {
+    //     /**
+    //      * Berechne die Gesamtmenge aller Votes aller Einträge.
+    //      */
+    //     totalVotes() {
+    //         return this.submissions.reduce((totalVotes, submission) => {
+    //             return totalVotes + submission.votes;
+    //         }, 0);
+    //     },
+    // },
     // Methoden
     methods: {
         upvote() {
@@ -32,6 +33,27 @@ const app = Vue.createApp({
         logConsole(text) {
             console.log(text);
         },
+    },
+    // Watcher / (Daten-) Beobachter
+    watch: {
+        // Beobachte Variable 'submissions' auf Veränderungen
+        submissions: {
+            handler(newvalue, oldValue) {
+                // Überschreibe 'globale' Variable
+                this.totalVotes = this.submissions.reduce((totalVotes, submission) => {
+                    return totalVotes + submission.votes;
+                }, 0);
+            },
+            // Beobachte auch Daten INNERHALB des Objekts (oder Arrays)
+            deep: true,
+            // Führe Watcher sofort (also bereits bei der Erstellung des Objekts) aus
+            immediate: true,
+        },
+        // Beobachte Variable 'totalVotes' auf Veränderungen
+        totalVotes(newvalue, oldValue) {
+            console.log(newvalue);
+            console.log(oldValue);
+        }
     }
 });
 
