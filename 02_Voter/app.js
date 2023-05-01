@@ -16,7 +16,13 @@ const app = Vue.createApp({
             return this.submissions.sort((a, b) => {
                 return b.votes - a.votes;
             });
-        }
+        },
+        cardHeaderBackgroundColor() {
+            return {
+                'bg-primary': this.totalVotes >= 50,
+                'text-white': this.totalVotes >= 50,
+            }
+        },
     },
     // Methoden
     methods: {
