@@ -3,7 +3,12 @@ const app = Vue.createApp({
     data: function() {
         return {
             submissions: submissions // aus seed.js 
-        }
+        };
+    },
+    methods: {
+        upvote() {
+            this.submissions[0].votes++;
+        },
     }
 });
 
