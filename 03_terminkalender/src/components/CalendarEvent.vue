@@ -21,7 +21,14 @@
         </div>
       </template>
       <template v-else>
-        <p>Moin!</p>
+        <input
+          type="text"
+          class="form-control"
+          :placeholder="event.title"
+          @input="setNewEventTitle"
+        />
+        <hr />
+        <i class="fas fa-check" role="button" @click="updateEvent()"></i>
       </template>
     </div>
   </div>
@@ -38,6 +45,11 @@ export default {
     day: {
       type: Object,
     },
+  },
+  data: function () {
+    return {
+      newEventTitle: "",
+    };
   },
   computed: {
     priorityDisplayName: function () {
@@ -59,8 +71,19 @@ export default {
     editEvent: function () {
       Store.mutations.editEvent(this.day.id, this.event.title);
     },
+    updateEvent: function () {
+      Store.mutations.updateEvent(
+        this.day.id,
+        this.event.title,
+        this.newEventTitle
+      );
+    },
     deleteEvent: function () {
       Store.mutations.deleteEvent(this.day.id, this.event.title);
+    },
+    // Bei jeder Eingabe, setze den newEventTitle auf die Eingabe
+    setNewEventTitle: function (event) {
+      this.newEventTitle = event.target.value;
     },
   },
 };
