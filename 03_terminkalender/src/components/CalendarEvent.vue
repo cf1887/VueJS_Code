@@ -2,15 +2,15 @@
   <div id="calendar-event">
     <div class="alert text-center" :class="alertColor">
       <div>
-        <slot name="eventPriority">
+        <!-- Veröffentlichung der computed Property dieser Klasse für Slot-Befüllung -->
+        <slot name="eventPriority" :priorityDisplayName="priorityDisplayName">
             <!-- Alles, was zwischen dem öffnenden und dem schließenden Slot-tag steht, ist der sogenannte "FallbackContent". -->
             <!-- Ein FallbackContent ist der Inhalt, welcher (default) angezeigt wird, wenn der Slot NICHT von außen befüllt wird. -->
             <strong>{{ priorityDisplayName }}</strong>
         </slot>
       </div>
+      <slot :event="event">
         <div>{{ event.title }}</div>
-      <slot>
-        
       </slot>
 
       <div>
