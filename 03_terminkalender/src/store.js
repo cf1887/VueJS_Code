@@ -12,7 +12,13 @@ const getters = {
     activeDay: () => state.calendarWeekData.find((day) => day.active),
 };
 
-const mutations = {};
+const mutations = {
+    deleteEvent(dayId, eventTitle) {
+        const dayObj = state.calendarWeekData.find((day) => day.id === dayId);
+        const eventIndex = dayObj.events.findIndex((event) => event.title === eventTitle);
+        dayObj.events.splice(eventIndex, 1);
+    }
+};
 
 export default {
 // Sorge dafür, dass die Daten des oben definierten States nicht einfach so überschrieben werden können (dafür sind schließlich die Mutations da)

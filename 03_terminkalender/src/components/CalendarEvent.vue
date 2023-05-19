@@ -15,17 +15,21 @@
 
       <div>
         <i class="fas fa-edit me-2" role="button"></i>
-        <i class="far fa-trash-alt" role="button"></i>
+        <i class="far fa-trash-alt" role="button" @click="deleteEvent()"></i>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Store from '../store';
 export default {
   name: "CalendarEvent",
   props: {
     event: {
+        type: Object,
+    },
+    day: {
         type: Object,
     }
   },
@@ -41,6 +45,11 @@ export default {
     alertColor: function () {
         return "alert-" + this.event.color;
     }
+  },
+  methods: {
+    deleteEvent: function () {
+        Store.mutations.deleteEvent(this.day.id, this.day.title);
+    },
   }
 };
 </script>

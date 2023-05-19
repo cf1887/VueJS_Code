@@ -12,6 +12,7 @@
         v-for="event in day.events"
         :key="event.title"
         :event="event"
+        :day="day"
       >
         <template #eventPriority="slotProps"
           ><h5>{{ slotProps.priorityDisplayName }}</h5></template
