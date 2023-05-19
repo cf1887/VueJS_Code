@@ -2,19 +2,25 @@
   <div id="calender-week">
     <div class="card-group">
       <!-- Anfang: Template für die Calendar-Day-Component -->
-      <CalendarDay v-for="i in 7" :key="i"></CalendarDay>
+      <CalendarDay v-for="calendarDay in calendarWeekData" :key="calendarDay.id"></CalendarDay>
       <!-- Ende: Template für die Calendar-Day-Component -->
     </div>
   </div>
 </template>
 
 <script>
-import CalendarDay from "./CalendarDay.vue"
+import CalendarDay from "./CalendarDay.vue";
+import Store from "../store";
 export default {
   // Guter Stil: Jede Component sollte einen Namen haben.
   name: "CalendarWeek",
   components: {
     CalendarDay
+  },
+  data: function () {
+    return {
+      calendarWeekData: Store.state.calendarWeekData
+    };
   }
 };
 </script>
