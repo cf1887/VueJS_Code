@@ -2,7 +2,7 @@
   <div id="calender-week">
     <div class="card-group">
       <!-- Anfang: Template für die Calendar-Day-Component -->
-      <CalendarDay v-for="calendarDay in calendarWeekData" :key="calendarDay.id"></CalendarDay>
+      <CalendarDay v-for="calendarDay in calendarWeekData" :key="calendarDay.id" :day="calendarDay"></CalendarDay>
       <!-- Ende: Template für die Calendar-Day-Component -->
     </div>
   </div>
