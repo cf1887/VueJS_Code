@@ -4,13 +4,12 @@
       <strong>{{ day.fullName }}</strong>
     </div>
     <div class="card-body">
-      <CalendarEvent></CalendarEvent>
+      <CalendarEvent v-for="event in day.events" :key="event.title" :event="event"></CalendarEvent>
     </div>
   </div>
 </template>
 
 <script>
-import { tsObjectKeyword } from "@babel/types";
 import CalendarEvent from "./CalendarEvent.vue";
 export default {
   name: "CalendarDay",
