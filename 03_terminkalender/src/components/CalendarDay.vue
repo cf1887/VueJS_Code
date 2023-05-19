@@ -12,7 +12,10 @@
         v-for="event in day.events"
         :key="event.title"
         :event="event"
-      ></CalendarEvent>
+      >
+      <template v-slot:eventPriority>Priorität</template>
+      <template v-slot>Titel des Events</template>
+    </CalendarEvent>
     </div>
   </div>
 </template>
