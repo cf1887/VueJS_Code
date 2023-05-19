@@ -2,12 +2,16 @@
   <div id="calendar-event">
     <div class="alert text-center" :class="alertColor">
       <div>
-        <!-- <strong>{{ priorityDisplayName }}</strong> -->
-        <slot name="eventPriority"></slot>
+        <slot name="eventPriority">
+            <!-- Alles, was zwischen dem öffnenden und dem schließenden Slot-tag steht, ist der sogenannte "FallbackContent". -->
+            <!-- Ein FallbackContent ist der Inhalt, welcher (default) angezeigt wird, wenn der Slot NICHT von außen befüllt wird. -->
+            <strong>{{ priorityDisplayName }}</strong>
+        </slot>
       </div>
-
-      <!-- <div>{{ event.title }}</div> -->
-      <slot></slot>
+        <div>{{ event.title }}</div>
+      <slot>
+        
+      </slot>
 
       <div>
         <i class="fas fa-edit me-2" role="button"></i>
