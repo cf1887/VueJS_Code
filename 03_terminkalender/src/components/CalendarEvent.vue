@@ -16,7 +16,7 @@
         </slot>
 
         <div>
-          <i class="fas fa-edit me-2" role="button"></i>
+          <i class="fas fa-edit me-2" role="button" @click="editEvent()"></i>
           <i class="far fa-trash-alt" role="button" @click="deleteEvent()"></i>
         </div>
       </template>
@@ -56,8 +56,11 @@ export default {
     },
   },
   methods: {
+    editEvent: function () {
+      Store.mutations.editEvent(this.day.id, this.event.title);
+    },
     deleteEvent: function () {
-      Store.mutations.deleteEvent(this.day.id, this.day.title);
+      Store.mutations.deleteEvent(this.day.id, this.event.title);
     },
   },
 };

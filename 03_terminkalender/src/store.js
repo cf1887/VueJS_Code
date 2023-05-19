@@ -13,11 +13,21 @@ const getters = {
 };
 
 const mutations = {
+    editEvent(dayId, eventTitle) {
+        // Setze erstmal alle Edit-Attribute auf false, sodass immer nur ein Event zur Zeit auf True ist
+        state.calendarWeekData.map((dayObj) => {
+            dayObj.events.forEach((event) => event.edit = false);
+        });
+        // Setze dieses Event auf true
+        const dayObj = state.calendarWeekData.find((day) => day.id === dayId);
+        const eventObj = dayObj.events.find((event) => event.title === eventTitle);
+        eventObj.edit = true;
+    },
     deleteEvent(dayId, eventTitle) {
         const dayObj = state.calendarWeekData.find((day) => day.id === dayId);
         const eventIndex = dayObj.events.findIndex((event) => event.title === eventTitle);
         dayObj.events.splice(eventIndex, 1);
-    }
+    },
 };
 
 export default {
