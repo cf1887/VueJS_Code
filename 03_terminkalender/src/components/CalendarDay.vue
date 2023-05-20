@@ -12,9 +12,15 @@
       <transition name="fade" mode="out-in">
         <div v-if="day.events.length">
           <transition-group name="list">
-            <CalendarEvent
+            <!-- <CalendarEvent
               v-for="event in events"
               :key="event.title"
+              :event="event"
+              :day="day"
+            > -->
+            <CalendarEvent
+              v-for="(event, index) in events"
+              :key="event.title + index"
               :event="event"
               :day="day"
             >
@@ -79,7 +85,7 @@ export default {
     },
     events: function () {
       return Store.getters.events(this.day.id);
-    }
+    },
   },
   methods: {
     setActiveDay() {
@@ -103,5 +109,8 @@ export default {
 .list-enter-active,
 .list-leave-active {
   transition: all 1s ease;
+}
+.list-move {
+  transition: transform 0.8s ease;
 }
 </style>
