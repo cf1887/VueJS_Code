@@ -9,17 +9,26 @@
       <strong>{{ day.fullName }}</strong>
     </div>
     <div class="card-body">
-      <CalendarEvent
-        v-for="event in day.events"
-        :key="event.title"
-        :event="event"
-        :day="day"
-      >
-        <template #eventPriority="slotProps"
-          ><h5>{{ slotProps.priorityDisplayName }}</h5></template
+      <transition name="fade" mode="out-in">
+        <div v-if="day.events.length">
+        <CalendarEvent
+          v-for="event in day.events"
+          :key="event.title"
+          :event="event"
+          :day="day"
         >
-        <template #default="{ event: entry }"> {{ entry.title }}</template>
-      </CalendarEvent>
+          <template #eventPriority="slotProps"
+            ><h5>{{ slotProps.priorityDisplayName }}</h5></template
+          >
+          <template #default="{ event: entry }"> {{ entry.title }}</template>
+        </CalendarEvent>
+      </div>
+      <div v-else>
+        <div class="alert alert-light text-center">
+          <i>Keine Termine</i>
+        </div>
+      </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -66,10 +75,10 @@ export default {
     },
   },
   methods: {
-      setActiveDay() {
-        Store.mutations.setActiveDay(this.day.id);
-      },
+    setActiveDay() {
+      Store.mutations.setActiveDay(this.day.id);
     },
+  },
 };
 </script>
 
