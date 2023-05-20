@@ -3,6 +3,7 @@
     <div class="row">
       <div class="col-12">
         <!-- Anfang: Template für die Calendar-Week-Component -->
+        <CalendarListAsWeek></CalendarListAsWeek>
         <CalendarWeek></CalendarWeek>
         <!-- Ende: Template für die Calendar-Week-Component -->
       </div>
@@ -35,6 +36,7 @@
 <script>
 import { defineAsyncComponent } from "vue";
 import CalendarWeek from "./components/CalendarWeek.vue";
+import CalendarListAsWeek from "./components/CalendarWeekAsList.vue";
 import CalendarEntry from "./components/CalendarEntry.vue";
 // Dieser Import muss durch die defineAsyncComponent umgeschrieben werden
 // import CalendarSettings from "./components/CalendarSettings.vue";
@@ -46,6 +48,7 @@ export default {
 
     // Kurzschreibweise: CalendarWeek
     CalendarWeek,
+    CalendarListAsWeek,
     CalendarEntry,
     // Hier wird asynchron die CalendarSettings-Component geladen (also nur dann, wenn sie auch wirklich gebraucht wird!)
     CalendarSettings: defineAsyncComponent(() => {
