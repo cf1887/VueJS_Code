@@ -7,6 +7,9 @@
         </h5>
       </div>
       <div class="card-body">
+        <div class="alert alert-danger" v-if="error">
+          Der Titel darf nicht leer sein!
+        </div>
         <input
           type="text"
           class="form-control"
@@ -31,7 +34,7 @@
         </div>
         <hr />
         <div class="d-grid gap-2">
-          <button class="btn btn-primary">Eintragen</button>
+          <button class="btn btn-primary" :disabled="submitEventButtonStatus" @click="submitEvent()">Eintragen</button>
           <button class="btn btn-danger">Inhalt löschen</button>
         </div>
       </div>
@@ -51,12 +54,16 @@ export default {
         color: "primary",
         priority: 0,
       },
+      error: false,
     };
   },
   computed: {
     activeDayName() {
       return Store.getters.activeDay().fullName;
     },
+    submitEventButtonStatus() {
+      return this.isEmptyTitle();
+    }
   },
   methods: {
     eventColorClasses(eventColor) {
@@ -70,6 +77,19 @@ export default {
     setEventColor(eventColor) {
       this.event.color = eventColor;
     },
+    submitEvent() {
+      if (this.isEmptyTitle()) { return (this.error = true); }
+      Store.mutations.storeEvent(this.event);
+      this.event = {
+        title: "",
+        color: "primary",
+        priority: 0,
+      }
+      this.error = false;
+    },
+    isEmptyTitle() {
+      return this.event.title === "";
+    }
   },
 };
 </script>

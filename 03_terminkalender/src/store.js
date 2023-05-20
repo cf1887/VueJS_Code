@@ -13,6 +13,15 @@ const getters = {
 };
 
 const mutations = {
+    storeEvent(eventDO) {
+        const activeDay = getters.activeDay();
+        activeDay.events.push({
+            title: eventDO.title,
+            edit: false,
+            color: eventDO.color,
+            priority: Number(eventDO.priority),
+        });
+    },
     editEvent(dayId, eventTitle) {
         // Setze erstmal alle Edit-Attribute auf false, sodass immer nur ein Event zur Zeit auf True ist
         state.calendarWeekData.map((dayObj) => {
