@@ -36,6 +36,9 @@ const mutations = {
         const eventIndex = dayObj.events.findIndex((event) => event.title === eventTitle);
         dayObj.events.splice(eventIndex, 1);
     },
+    setActiveDay(dayId) {
+        state.calendarWeekData.map((dayObj) => dayObj.id === dayId ? (dayObj.active = true) : (dayObj.active = false));
+    }
 };
 
 export default {
