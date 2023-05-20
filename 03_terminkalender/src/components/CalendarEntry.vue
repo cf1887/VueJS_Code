@@ -17,6 +17,7 @@
           v-model="event.title"
           @keyup.enter.exact="submitEvent()"
           @keyup.ctrl.enter.exact="resetEventTitle()"
+          ref="eventTitleInput"
         />
         <select class="form-select mt-2" v-model="event.priority">
           <option value="-1">Hoch</option>
@@ -66,6 +67,9 @@ export default {
     submitEventButtonStatus() {
       return this.isEmptyTitle();
     }
+  },
+  mounted () {
+    this.$refs.eventTitleInput.focus();
   },
   methods: {
     eventColorClasses(eventColor) {
