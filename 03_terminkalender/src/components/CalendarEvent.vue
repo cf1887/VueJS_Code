@@ -27,6 +27,11 @@
           :placeholder="event.title"
           @input="setNewEventTitle"
         />
+        <select class="form-select mt-2" v-model="newEventPriority">
+          <option value="-1">Hoch</option>
+          <option value="0">Mittel</option>
+          <option value="1">Tief</option>
+        </select>
         <hr />
         <i class="fas fa-check" role="button" @click="updateEvent()"></i>
       </template>
@@ -49,6 +54,7 @@ export default {
   data: function () {
     return {
       newEventTitle: "",
+      newEventPriority: this.event.priority,
     };
   },
   computed: {
@@ -75,7 +81,10 @@ export default {
       Store.mutations.updateEvent(
         this.day.id,
         this.event.title,
-        this.newEventTitle
+        {
+          title: this.newEventTitle,
+          priority: this.newEventPriority,
+        }
       );
     },
     deleteEvent: function () {
