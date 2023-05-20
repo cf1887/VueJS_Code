@@ -6,12 +6,28 @@ import { readonly } from "vue";
 
 const state = reactive({
   calendarWeekData,
-  activeView: "CalendarWeek"
+  activeView: "CalendarWeek",
+  activeOrdering: "title",
 });
 
 const getters = {
     activeDay: () => state.calendarWeekData.find((day) => day.active),
     activeView: () => state.activeView,
+    activeOrdering: () => state.activeOrdering,
+    events: (dayId) => {
+        const dayObj = state.calendarWeekData.find((day) => day.id === dayId);
+        return dayObj.events.sort((eventA, eventB) => {
+            if (eventA[state.activeOrdering] > eventB[state.activeOrdering]) {
+                return 1;
+            }
+            else if (eventA[state.activeOrdering] < eventB[state.activeOrdering]) {
+                return -1;
+            }
+            else {
+                return 0;
+            }
+        })
+    },
 };
 
 const mutations = {
@@ -52,6 +68,9 @@ const mutations = {
     },
     setActiveDay(dayId) {
         state.calendarWeekData.map((dayObj) => dayObj.id === dayId ? (dayObj.active = true) : (dayObj.active = false));
+    },
+    setActiveOrdering(ordering) {
+        state.activeOrdering = ordering;
     }
 };
 
