@@ -6,7 +6,10 @@ ___
 
 ## Inhaltsverzeichnis
 
-[TOC]
+- [Inhaltsverzeichnis](#inhaltsverzeichnis)
+- [Wichtige Attribute](#wichtige-attribute)
+- [Computed Properties vs. Methods vs. Watcher](#computed-properties-vs-methods-vs-watcher)
+- [Zusammenfassung der grundlegenden Vue-Funktionalitäten](#zusammenfassung-der-grundlegenden-vue-funktionalitäten)
 
 ___
 
@@ -22,4 +25,19 @@ Dazu git es Common-Practices:
 |-----------|---------------------|---------|---------|
 | Code wird ausgeführt, wenn sich... | abhängige Daten ändern. | "sichtbare" Daten ändern, d.h. das Template neu geladen werden muss. | die beobachteten Daten ändern. |
 | Einsatz | Daten, welche von anderen Daten abhängen (z.B. totalVotes). | Event-Listener oder für Daten, die sich permanent ändern. | Sollte Code ausführen, welcher sich nicht direkt auf das Template auswirkt, z.B. HTTP-Anfragen, Nutzung von localStorage, etc. |
+
+___
+
+## Zusammenfassung der grundlegenden Vue-Funktionalitäten
+
+| Abschluss | Stichwort in Vue-Doc |
+|-----------|----------------------|
+| Components lokal einbinden | Component Registration |
+| Daten an eine Component "runter" geben | Props |
+| Das Template einer Component von "außen" selbst bestimmen | Slots |
+| Event-Listener einschränken | Modifiers |
+| In den Erstellungsprozess einer Component eingreifen | Lifecycle-Hooks |
+| Template-Elemente an eine Bedingung knüpfen | v-if / v-show |
+| Components erst dann laden, wenn sie auch wirklich benötigt werden | Async Components |
+| Components im Template dynamisch wechseln | Dynamic Components |
 
