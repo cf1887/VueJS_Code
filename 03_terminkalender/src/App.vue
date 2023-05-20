@@ -29,7 +29,9 @@
           </button>
         </div>
         <!-- Anfang: Template für die Calendar-Settings-Component -->
-        <CalendarSettings v-if="displaySettings"></CalendarSettings>
+        <transition name="fade">
+          <CalendarSettings v-if="displaySettings"></CalendarSettings>
+        </transition>
         <!-- Ende: Template für die Calendar-Settings-Component -->
       </div>
     </div>
@@ -70,7 +72,7 @@ export default {
     },
     activeView() {
       return Store.getters.activeView();
-    }
+    },
   },
   methods: {
     toggleDisplaySettings() {
@@ -89,5 +91,22 @@ export default {
 .square {
   width: 40px;
   height: 40px;
+}
+
+/**
+* Transition: Fade
+* Hat die Transition kein name-Attribut, ist der Name automatisch "v", also z.B. v-enter-form.
+*/
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.25s ease-out;
 }
 </style>
