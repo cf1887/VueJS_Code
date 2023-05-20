@@ -31,7 +31,13 @@
           </button>
         </div>
         <!-- Anfang: Template für die Calendar-Settings-Component -->
-        <transition name="fade">
+        <!-- <transition name="fade">
+          <CalendarSettings v-if="displaySettings"></CalendarSettings>
+        </transition> -->
+        <transition
+          enter-active-class="animate__animated animate__bounceInRight"
+          leave-active-class="animate__animated animate__bounceOutRight"
+        >
           <CalendarSettings v-if="displaySettings"></CalendarSettings>
         </transition>
         <!-- Ende: Template für die Calendar-Settings-Component -->
@@ -89,6 +95,8 @@ export default {
 @import "~bootstrap/dist/css/bootstrap.min.css";
 /** FontAwesome importieren */
 @import "~@fortawesome/fontawesome-free/css/all.css";
+/** Animate.css importieren */
+@import "~animate.css/animate.min.css";
 
 .square {
   width: 40px;
