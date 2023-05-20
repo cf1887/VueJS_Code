@@ -26,6 +26,7 @@
           class="form-control"
           :placeholder="event.title"
           @input="setNewEventTitle"
+          ref="newEventTitleInput"
         />
         <select class="form-select mt-2" v-model="newEventPriority">
           <option value="-1">Hoch</option>
@@ -76,6 +77,11 @@ export default {
   methods: {
     editEvent: function () {
       Store.mutations.editEvent(this.day.id, this.event.title);
+      // Da das Event-Handling asynchron ist, müssen wir (auf den nächsten Tick) warten, bevor wir das Input-element in den Fokus rücken können
+      this.$nextTick(() => {
+        // Greife auf Input-Element via Referenz zu (mihilfe von vue template refs)
+        this.$refs.newEventTitleInput.focus();
+      });
     },
     updateEvent: function () {
       Store.mutations.updateEvent(
