@@ -3,8 +3,9 @@
     <div class="row">
       <div class="col-12">
         <!-- Anfang: Template für die Calendar-Week-Component -->
-        <CalendarListAsWeek></CalendarListAsWeek>
-        <CalendarWeek></CalendarWeek>
+        <!-- <CalendarListAsWeek></CalendarListAsWeek>
+        <CalendarWeek></CalendarWeek> -->
+        <component :is="activeView"></component>
         <!-- Ende: Template für die Calendar-Week-Component -->
       </div>
     </div>
@@ -35,8 +36,9 @@
 
 <script>
 import { defineAsyncComponent } from "vue";
+import Store from "./store";
 import CalendarWeek from "./components/CalendarWeek.vue";
-import CalendarListAsWeek from "./components/CalendarWeekAsList.vue";
+import CalendarWeekAsList from "./components/CalendarWeekAsList.vue";
 import CalendarEntry from "./components/CalendarEntry.vue";
 // Dieser Import muss durch die defineAsyncComponent umgeschrieben werden
 // import CalendarSettings from "./components/CalendarSettings.vue";
@@ -48,7 +50,7 @@ export default {
 
     // Kurzschreibweise: CalendarWeek
     CalendarWeek,
-    CalendarListAsWeek,
+    CalendarWeekAsList,
     CalendarEntry,
     // Hier wird asynchron die CalendarSettings-Component geladen (also nur dann, wenn sie auch wirklich gebraucht wird!)
     CalendarSettings: defineAsyncComponent(() => {
@@ -64,6 +66,9 @@ export default {
     buttonSettingsClasses() {
       return this.displaySettings ? ["btn-success"] : ["btn-outline-success"];
     },
+    activeView() {
+      return Store.getters.activeView();
+    }
   },
   methods: {
     toggleDisplaySettings() {

@@ -6,13 +6,18 @@ import { readonly } from "vue";
 
 const state = reactive({
   calendarWeekData,
+  activeView: "CalendarWeek"
 });
 
 const getters = {
     activeDay: () => state.calendarWeekData.find((day) => day.active),
+    activeView: () => state.activeView,
 };
 
 const mutations = {
+    setActiveView (view) {
+        state.activeView = view;
+    },
     storeEvent(eventDO) {
         const activeDay = getters.activeDay();
         activeDay.events.push({
