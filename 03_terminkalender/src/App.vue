@@ -6,7 +6,9 @@
         <!-- <CalendarListAsWeek></CalendarListAsWeek>
         <CalendarWeek></CalendarWeek> -->
         <keep-alive>
-          <component :is="activeView"></component>
+          <transition name="fade" mode="out-in" appear="true">
+            <component :is="activeView"></component>
+          </transition>
         </keep-alive>
         <!-- Ende: Template für die Calendar-Week-Component -->
       </div>
