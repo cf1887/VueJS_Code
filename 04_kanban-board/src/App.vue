@@ -13,6 +13,7 @@
                     :status="statusCard.status"
                     :tasks="filteredTasks(statusCard.status)"
                     @new-task="addTask"
+                    @status-updated="updateStatus"
                 ></StatusCard>
             </div>
         </div>
@@ -85,7 +86,11 @@ export default {
         task.id = Math.random();
         this.tasks.push(task);
         this.writeLogEntry("Neue Aufgabe hinzugefügt.");
-      }
+      },
+      updateStatus(statusDataObject) {
+        const task = this.tasks.find((task) => task.id === Number(statusDataObject.taskId));
+        task.status = statusDataObject.newStatus;
+      },
     }
 };
 </script>

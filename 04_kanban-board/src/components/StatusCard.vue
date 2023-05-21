@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div class="card" @drop="onDrop($event)" @dragover.prevent @dragenter.prevent>
         <div class="card-header text-center" :class="titleClasses">
             <h4>{{ title }}</h4>
         </div>
@@ -9,6 +9,8 @@
                 :key="task.id"
                 :task="task"
                 :alertColor="alertColor"
+                draggable="true"
+                @dragstart="startDrag($event, task)"
             ></Task>
         </div>
         <div class="card-footer" v-if="newTasks">
@@ -41,6 +43,13 @@ export default {
             }
             return true;
         },
+        "status-updated": (statusDataObject) => {
+            if ("newStatus" in statusDataObject === false) {
+                console.warn("StatusCardComponent: Jede Aufgabe muss ein 'status'-Attribut haben.");
+                return false;
+            }
+            return true;
+        },  
     },
     computed: {
         alertColor() {
@@ -60,6 +69,18 @@ export default {
         newTask(task) {
             task.status = this.status;
             this.$emit("new-task", task);
+        },
+        startDrag(event, task) {
+            event.dataTransfer.dropEffect = "move";
+            event.dataTransfer.effectAllowed = "move";
+            event.dataTransfer.setData("taskId", task.id);
+        },
+        onDrop(event) {
+            const taskId = event.dataTransfer.getData("taskId");
+            this.$emit("status-updated", {
+                taskId: taskId,
+                newStatus: this.status
+            });
         }
     }
 };
