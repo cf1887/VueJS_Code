@@ -11,6 +11,7 @@ ___
 - [Computed Properties vs. Methods vs. Watcher](#computed-properties-vs-methods-vs-watcher)
 - [Zusammenfassung der grundlegenden Vue-Funktionalitäten](#zusammenfassung-der-grundlegenden-vue-funktionalitäten)
 - [Zusammenfassung zu Transitions](#zusammenfassung-zu-transitions)
+- [Zusammenfassung zum Kanban-Board](#zusammenfassung-zum-kanban-board)
 
 ___
 
@@ -53,3 +54,17 @@ ___
 | Zwischen Blöcke Übergänge realisieren. | Transitioning between elements |
 | Elemente innerhalb einer Gruppe von Elementen animieren. | Transition-groups & list-transitions |
 | Verwendung von externen Paketen zur Animation (animate.css) | Custom transition classes |
+
+___
+
+## Zusammenfassung zum Kanban-Board
+
+| Abschluss | Stichwort in Vue-Doc |
+|-----------|----------------------|
+| Kommunikation zwischen Eltern und Kindern realisieren. | props & Custom Events |
+| (Nicht-reaktive!) Daten über beliebig viele Components bereitstellen und einbinden. | provide & inject|
+| Wiederverwendbaren Code auslagern | mixins |
+| Eigene "Attribute" erstellen und verwenden | Cusom Directives |
+| Argument einer eigenen Directive (=== "Attribut") dynamisch binden | Dynamic Arguments |
+| Template-Blöcke außerhalb des "Vue"-Bereichs verschieben | Teleport-Tag |
+
