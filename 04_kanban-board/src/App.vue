@@ -12,6 +12,7 @@
                     :newTasks="statusCard.newTasks"
                     :status="statusCard.status"
                     :tasks="filteredTasks(statusCard.status)"
+                    @new-task="addTask"
                 ></StatusCard>
             </div>
         </div>
@@ -69,6 +70,10 @@ export default {
     methods: {
       filteredTasks(status) {
         return this.tasks.filter((task) => task.status === status);
+      },
+      addTask(task) {
+        task.id = Math.random();
+        this.tasks.push(task);
       }
     }
 };

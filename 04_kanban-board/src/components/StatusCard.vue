@@ -12,7 +12,7 @@
             ></Task>
         </div>
         <div class="card-footer" v-if="newTasks">
-            <NewTask></NewTask>
+            <NewTask @new-task="newTask"></NewTask>
         </div>
     </div>
 </template>
@@ -33,6 +33,15 @@ export default {
         newTasks: Boolean,
         tasks: Array,
     },
+    emits: {
+        "new-task": (task) => {
+            if ("status" in task === false) {
+                console.warn("StatusCardComponent: Jede Aufgabe muss ein 'status'-Attribut haben.");
+                return false;
+            }
+            return true;
+        },
+    },
     computed: {
         alertColor() {
             switch (this.status) {
@@ -47,6 +56,12 @@ export default {
             }
         },
     },
+    methods: {
+        newTask(task) {
+            task.status = this.status;
+            this.$emit("new-task", task);
+        }
+    }
 };
 </script>
 
