@@ -1,6 +1,7 @@
 <template>
     <div>
         <input type="text" class="form-control" placeholder="Neue Aufgabe" v-model="content" />
+        <small>Noch {{ numbersOfCharsLeft }} Zeichen erlaubt.</small>
         <div class="d-grid my-2">
             <button class="btn btn-secondary" @click="submitTask()">Eintragen</button>
         </div>
@@ -10,6 +11,10 @@
 <script>
 export default {
     name: "NewTask",
+    // Direktes 'Injizieren von Daten, die zuvor von 'provide' in einer beliebigen Component zur Verfügung gestellt werden'
+    inject: [
+      "maxNumberOfChars",
+    ],
     // Registrieren, welche Events es in dieser Component gibt
     emits: {
         "new-task": (task) => {
@@ -27,6 +32,11 @@ export default {
             content: "",
         }
     },
+    computed: {
+        numbersOfCharsLeft() {
+            return this.maxNumberOfChars - this.content.length;
+        }
+    },
     methods: {
         submitTask() {
             // Event ausrufen
@@ -35,7 +45,7 @@ export default {
                 content: this.content,
             });
             this.content = "";
-        }
+        },
     }
 };
 </script>
