@@ -31,7 +31,7 @@ export default {
                 {
                     id: 1,
                     content: "Dashboard überarbeiten.",
-                    status: 0,
+                    status: 1,
                 },
                 {
                     id: 2,
