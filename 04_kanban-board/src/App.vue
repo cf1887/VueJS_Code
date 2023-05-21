@@ -1,8 +1,18 @@
 <template>
     <div class="container mt-5">
         <div class="row">
-            <div class="col-4" v-for="i in 3" :key="i">
-                <StatusCard></StatusCard>
+            <div
+                class="col-4"
+                v-for="statusCard in statusCards"
+                :key="statusCard.status"
+            >
+                <StatusCard
+                    :title="statusCard.title"
+                    :titleClasses="statusCard.titleClasses"
+                    :newTasks="statusCard.newTasks"
+                    :status="statusCard.status"
+                    :tasks="filteredTasks(statusCard.status)"
+                ></StatusCard>
             </div>
         </div>
     </div>
@@ -29,13 +39,38 @@ export default {
                     status: 0,
                 },
             ],
+            statusCards: [
+                {
+                    title: "Neue Aufgaben",
+                    titleClasses: "bg-secondary text-white",
+                    newTasks: true,
+                    status: 0,
+                },
+                {
+                    title: "In Bearbeitung",
+                    titleClasses: "bg-primary text-white",
+                    newTasks: false,
+                    status: 1,
+                },
+                {
+                    title: "Erledigt",
+                    titleClasses: "bg-success text-white",
+                    newTasks: false,
+                    status: 2,
+                },
+            ],
         };
     },
-    computed: {
-        newTasks() {
-            return this.tasks.filter((task) => task.status === 0);
-        },
-    },
+    // computed: {
+    //     newTasks() {
+    //         return this.tasks.filter((task) => task.status === 0);
+    //     },
+    // },
+    methods: {
+      filteredTasks(status) {
+        return this.tasks.filter((task) => task.status === status);
+      }
+    }
 };
 </script>
 

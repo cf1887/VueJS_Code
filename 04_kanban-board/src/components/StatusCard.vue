@@ -1,12 +1,12 @@
 <template>
     <div class="card">
-        <div class="card-header text-center bg-secondary text-white">
-            <h4>Neue Aufgaben</h4>
+        <div class="card-header text-center" :class="titleClasses">
+            <h4>{{ title }}</h4>
         </div>
         <div class="card-body">
-            <Task></Task>
+            <Task v-for="task in tasks" :key="task.id"></Task>
         </div>
-        <div class="card-footer">
+        <div class="card-footer" v-if="newTasks">
             <NewTask></NewTask>
         </div>
     </div>
@@ -20,6 +20,13 @@ export default {
     components: {
         Task,
         NewTask,
+    },
+    props: {
+        title: String,
+        titleClasses: String,
+        status: Number,
+        newTasks: Boolean,
+        tasks: Array,
     },
 };
 </script>
