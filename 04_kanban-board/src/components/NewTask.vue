@@ -13,10 +13,12 @@
                 Eintragen
             </button>
         </div>
-        <select class="form-select" v-model="mode">
-            <option value="click">Einfacher Klick</option>
-            <option value="dblclick">Doppelklick</option>
-        </select>
+        <teleport to="#settings">
+            <select class="form-select" v-model="mode">
+                <option value="click">Einfacher Klick</option>
+                <option value="dblclick">Doppelklick</option>
+            </select>
+        </teleport>
     </div>
 </template>
 
