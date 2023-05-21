@@ -21,8 +21,13 @@
 
 <script>
 import StatusCard from "./components/StatusCard.vue";
+import Logger from "./mixins/Logger.js";
+
 export default {
     name: "App",
+    mixins: [
+      Logger
+    ],
     components: {
         StatusCard,
     },
@@ -79,6 +84,7 @@ export default {
       addTask(task) {
         task.id = Math.random();
         this.tasks.push(task);
+        this.writeLogEntry("Neue Aufgabe hinzugefügt.");
       }
     }
 };

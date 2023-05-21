@@ -23,7 +23,6 @@ export default {
                 console.warn("NewTaskComponent: Der Content sollte nicht leer sein!");
                 return false;
             }
-            console.log('content', task.content);
             return true;
         }
     },

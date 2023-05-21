@@ -1,4 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import Logger from './mixins/Logger';
 
-createApp(App).mount('#app')
+const app = createApp(App);
+app.mixin(Logger);
+app.mount('#app');
