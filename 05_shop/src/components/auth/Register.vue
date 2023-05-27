@@ -12,7 +12,11 @@
                 >
             </p>
         </div>
-        <Form @submit="submitData">
+        <Form
+            @submit="submitData"
+            :validation-schema="schema"
+            v-slot="{ errors }"
+        >
             <div class="form-row">
                 <div class="form-group col-md-8 offset-2">
                     <label for="email"><strong>E-Mail-Adresse</strong></label>
@@ -23,6 +27,9 @@
                         class="form-control"
                         id="email"
                     />
+                    <small class="text-danger" v-if="errors.email">{{
+                        errors.email
+                    }}</small>
                 </div>
             </div>
             <div class="form-row">
@@ -35,6 +42,9 @@
                         class="form-control"
                         id="password"
                     />
+                    <small class="text-danger" v-if="errors.password">{{
+                        errors.password
+                    }}</small>
                 </div>
             </div>
             <div class="form-row">
@@ -49,6 +59,9 @@
                         class="form-control"
                         id="confirmPassword"
                     />
+                    <small class="text-danger" v-if="errors.confirmPassword">{{
+                        errors.confirmPassword
+                    }}</small>
                 </div>
             </div>
             <div class="form-row mt-3">
@@ -64,12 +77,32 @@
 
 <script>
 import { Form, Field } from "vee-validate";
+import * as yup from "yup";
 /* eslint-disable */
 export default {
     name: "Register",
     components: {
         Form,
         Field,
+    },
+    data() {
+        // Bilde Validierungs-Patterns für Yup.
+        // Abbildung von: Name des Field in Form => Wert
+        const schema = yup.object().shape({
+            email: yup
+                .string()
+                .required("E-Mail Adresse wird benötigt.")
+                .trim()
+                .email("Das ist keine gültige E-Mail Adresse."),
+            password: yup
+                .string()
+                .required("Ein Passwort wird benötigt.")
+                .min(6, "Das Passwort muss mindestens 6 Zeichen lang sein."),
+            confirmPassword: yup.string().oneOf([yup.ref("password")], "Passwörter stimmen nicht überein."),
+        });
+        return {
+            schema,
+        };
     },
     methods: {
         submitData(values) {
