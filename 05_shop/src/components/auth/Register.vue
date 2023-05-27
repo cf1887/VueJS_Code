@@ -82,6 +82,7 @@
 import { Form, Field } from "vee-validate";
 import * as yup from "yup";
 import axios from "axios";
+import { FIREBASE_API_KEY } from "@/config/firebase.js";
 /* eslint-disable */
 export default {
     name: "Register",
@@ -131,7 +132,7 @@ export default {
                 returnSecureToken: true,
             };
             axios.post(
-                "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBfRQXemktKamPKNIyB46syvqD7lrhgK6E",
+                `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${FIREBASE_API_KEY}`,
                 signUpDO
             ).then((response) => {
                 console.log(response);
