@@ -7,7 +7,10 @@
             <h2>Jetzt registrieren</h2>
             <p>
                 oder
-                <a class="text-vue2" role="button" @click="changeComponent('login')"
+                <a
+                    class="text-vue2"
+                    role="button"
+                    @click="changeComponent('login')"
                     >melden Sie sich mit Ihrem Konto an</a
                 >
             </p>
@@ -78,6 +81,7 @@
 <script>
 import { Form, Field } from "vee-validate";
 import * as yup from "yup";
+import axios from "axios";
 /* eslint-disable */
 export default {
     name: "Register",
@@ -86,12 +90,12 @@ export default {
         Field,
     },
     emits: {
-        'change-component': (payload) => {
+        "change-component": (payload) => {
             if (payload.componentName !== "login") {
                 return false;
             }
             return true;
-        }
+        },
     },
     data() {
         // Bilde Validierungs-Patterns für Yup.
@@ -106,7 +110,12 @@ export default {
                 .string()
                 .required("Ein Passwort wird benötigt.")
                 .min(6, "Das Passwort muss mindestens 6 Zeichen lang sein."),
-            confirmPassword: yup.string().oneOf([yup.ref("password")], "Passwörter stimmen nicht überein."),
+            confirmPassword: yup
+                .string()
+                .oneOf(
+                    [yup.ref("password")],
+                    "Passwörter stimmen nicht überein."
+                ),
         });
         return {
             schema,
@@ -114,11 +123,26 @@ export default {
     },
     methods: {
         submitData(values) {
-            console.log(values);
+            // Das, was die Firebase-REST-API gemäß Dokumentation für eine Registrierung erwartet
+            // @link: https://firebase.google.com/docs/reference/rest/auth?hl=de#section-create-email-password
+            const signUpDO = {
+                email: values.email,
+                password: values.password,
+                returnSecureToken: true,
+            };
+            axios.post(
+                "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBfRQXemktKamPKNIyB46syvqD7lrhgK6E",
+                signUpDO
+            ).then((response) => {
+                console.log(response);
+            }).catch((error) => {
+                // Hinweis: Die Interpolation des errors ermöglich den Zugriff und das Auslesen aller Informationen der Antwort.
+                console.log({ error });
+            });
         },
         changeComponent(componentName) {
             this.$emit("change-component", { componentName });
-        }
+        },
     },
 };
 </script>
