@@ -15,6 +15,8 @@
                 >
             </p>
         </div>
+        <div class="alert alert-danger col-md-8 offset-2" v-if="error">
+        {{ errorDisplayText }}</div>
         <Form
             @submit="submitData"
             :validation-schema="schema"
@@ -120,7 +122,19 @@ export default {
         });
         return {
             schema,
+            error: "",
         };
+    },
+    computed: {
+        errorDisplayText() {
+            if (this.error) {
+                if (this.error.includes("EMAIL_EXISTS")) {
+                    return "Die E-Mail Adresse existiert bereits";
+                }
+                return "Es ist ein unbekannter Fehler aufgetreten. Bitte versuchen Sie es noch einmal.";
+            }
+            return "";
+        }
     },
     methods: {
         submitData(values) {
@@ -138,7 +152,8 @@ export default {
                 console.log(response);
             }).catch((error) => {
                 // Hinweis: Die Interpolation des errors ermöglich den Zugriff und das Auslesen aller Informationen der Antwort.
-                console.log({ error });
+                // console.log({ error });
+                this.error = error.response.data.error.message;
             });
         },
         changeComponent(componentName) {
