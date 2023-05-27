@@ -16,7 +16,8 @@
             </p>
         </div>
         <div class="alert alert-danger col-md-8 offset-2" v-if="error">
-        {{ errorDisplayText }}</div>
+            {{ errorDisplayText }}
+        </div>
         <Form
             @submit="submitData"
             :validation-schema="schema"
@@ -74,7 +75,10 @@
                     <div class="d-grid">
                         <button class="btn bg-vue">
                             <span v-if="!isLoading">Registrieren</span>
-                            <span v-else class="spinner-border spinner-border-sm"></span>
+                            <span
+                                v-else
+                                class="spinner-border spinner-border-sm"
+                            ></span>
                         </button>
                     </div>
                 </div>
@@ -138,7 +142,7 @@ export default {
                 return "Es ist ein unbekannter Fehler aufgetreten. Bitte versuchen Sie es noch einmal.";
             }
             return "";
-        }
+        },
     },
     methods: {
         submitData(values) {
@@ -151,19 +155,23 @@ export default {
                 password: values.password,
                 returnSecureToken: true,
             };
-            axios.post(
-                `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${FIREBASE_API_KEY}`,
-                signUpDO
-            ).then((response) => {
-                console.log(response);
-                this.changeComponent("login");
-            }).catch((error) => {
-                // Hinweis: Die Interpolation des errors ermöglich den Zugriff und das Auslesen aller Informationen der Antwort.
-                // console.log({ error });
-                this.error = error.response.data.error.message;
-            }).finally(() => {
-                this.isLoading = false;
-            });
+            axios
+                .post(
+                    `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${FIREBASE_API_KEY}`,
+                    signUpDO
+                )
+                .then((response) => {
+                    console.log(response);
+                    this.changeComponent("login");
+                })
+                .catch((error) => {
+                    // Hinweis: Die Interpolation des errors ermöglich den Zugriff und das Auslesen aller Informationen der Antwort.
+                    // console.log({ error });
+                    this.error = error.response.data.error.message;
+                })
+                .finally(() => {
+                    this.isLoading = false;
+                });
         },
         changeComponent(componentName) {
             this.$emit("change-component", { componentName });

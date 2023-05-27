@@ -7,10 +7,16 @@
             <h2>Jetzt anmelden</h2>
             <p>
                 oder
-                <a class="text-vue2" role="button" @click="changeComponent('register')"
+                <a
+                    class="text-vue2"
+                    role="button"
+                    @click="changeComponent('register')"
                     >erstellen Sie ein Konto.</a
                 >
             </p>
+        </div>
+        <div class="alert alert-danger col-md-8 offset-2" v-if="error">
+            {{ errorDisplayText }}
         </div>
         <Form
             @submit="submitData"
@@ -50,7 +56,13 @@
             <div class="form-row mt-3">
                 <div class="form-group col-md-8 offset-2">
                     <div class="d-grid">
-                        <button class="btn bg-vue">Einloggen</button>
+                        <button class="btn bg-vue">
+                            <span v-if="!isLoading">Einloggen</span>
+                            <span
+                                v-else
+                                class="spinner-border spinner-border-sm"
+                            ></span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -61,6 +73,9 @@
 <script>
 import { Form, Field } from "vee-validate";
 import * as yup from "yup";
+import axios from "axios";
+import { FIREBASE_API_KEY } from "@/config/firebase.js";
+
 /* eslint-disable */
 export default {
     name: "Login",
@@ -69,12 +84,12 @@ export default {
         Field,
     },
     emits: {
-        'change-component': (payload) => {
+        "change-component": (payload) => {
             if (payload.componentName !== "login") {
                 return false;
             }
             return true;
-        }
+        },
     },
     data() {
         // Bilde Validierungs-Patterns für Yup.
@@ -92,15 +107,55 @@ export default {
         });
         return {
             schema,
+            error: "",
+            isLoading: false,
         };
+    },
+    computed: {
+        errorDisplayText() {
+            if (this.error) {
+                if (this.error.includes("INVALID_PASSWORD")) {
+                    return "Das Passwort ist nicht gültig.";
+                }
+                else if (this.error.includes("EMAIL_NOT_FOUND")) {
+                    return "E-Mail Adresse konnte nicht gefunden werden.";
+                }
+                return "Es ist ein unbekannter Fehler aufgetreten. Bitte versuchen Sie es noch einmal.";
+            }
+            return "";
+        },
     },
     methods: {
         submitData(values) {
-            console.log(values);
+            this.isLoading = true;
+            this.error = "";
+            // Das, was die Firebase-REST-API gemäß Dokumentation für eine Registrierung erwartet
+            // @link: https://firebase.google.com/docs/reference/rest/auth?hl=de#section-create-email-password
+            const signInDO = {
+                email: values.email,
+                password: values.password,
+                returnSecureToken: true,
+            };
+            axios
+                .post(
+                    `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${FIREBASE_API_KEY}`,
+                    signInDO
+                )
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch((error) => {
+                    // Hinweis: Die Interpolation des errors ermöglich den Zugriff und das Auslesen aller Informationen der Antwort.
+                    // console.log({ error });
+                    this.error = error.response.data.error.message;
+                })
+                .finally(() => {
+                    this.isLoading = false;
+                });
         },
         changeComponent(componentName) {
             this.$emit("change-component", { componentName });
-        }
+        },
     },
 };
 </script>
