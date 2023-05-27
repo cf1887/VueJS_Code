@@ -1,18 +1,14 @@
 <template>
-    <TheTwoColumsLayout
-        :leftColumnClass="'col-md-8 bg-vue'"
-        :rightColumnClass="'col-md-4'"
-        :fullsize="true"
-    ></TheTwoColumsLayout>
+    <HomePage></HomePage>
 </template>
 
 <script>
-import TheTwoColumsLayout from "./layouts/TheTwoColumnsLayout.vue";
+import HomePage from "./pages/HomePage.vue";
 
 export default {
     name: "App",
     components: {
-        TheTwoColumsLayout,
+      HomePage,
     },
 };
 </script>
