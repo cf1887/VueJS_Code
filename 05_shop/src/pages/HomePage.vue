@@ -4,47 +4,56 @@
         :rightColumnClass="'col-md-4'"
         :fullsize="true"
     >
-    <template #leftCol>
-        <div class="mt-5 text-center">
-            <div class="display-1 my-5">Der Shop</div>
-            <div class="display-4 my-5">
-                Erhalten Sie Zugriff auf exklusive Artikel
+        <template #leftCol>
+            <div class="mt-5 text-center">
+                <div class="display-1 my-5">Der Shop</div>
+                <div class="display-4 my-5">
+                    Erhalten Sie Zugriff auf exklusive Artikel
+                </div>
+                <div class="my-5 offset-4 col-4">
+                    <img src="@/assets/shopping.svg" alt="" class="img-fluid" />
+                </div>
             </div>
-            <div class="my-5 offset-4 col-4">
-                <img src="@/assets/shopping.svg" alt="" class="img-fluid">
-            </div>
-        </div>
-    </template>
-    <template #rightCol>
-        <component :is="componentName" @change-component="changeComponent"></component>
-    </template>
+        </template>
+        <template #rightCol>
+            <transition
+            enter-active-class="animate__animated animate__bounceInRight"
+            leave-active-class="animate__animated animate__bounceOutRight"
+            mode="out-in"
+            >
+                <component
+                    :is="componentName"
+                    @change-component="changeComponent"
+                ></component>
+            </transition>
+        </template>
     </TheTwoColumnsLayout>
 </template>
 
 <script>
 // import TheTwoColumnsLayoutVue from "../layouts/TheTwoColumnsLayout.vue";
 // Alternative Schreibweise für den o.g. auskommentierten Import (Webpack ermöglicht die Referenz auf root/src mit @)
-import TheTwoColumnsLayout from '@/layouts/TheTwoColumnsLayout.vue';
-import Register from '@/components/auth/Register.vue';
-import Login from '@/components/auth/Login.vue';
+import TheTwoColumnsLayout from "@/layouts/TheTwoColumnsLayout.vue";
+import Register from "@/components/auth/Register.vue";
+import Login from "@/components/auth/Login.vue";
 
 export default {
     name: "HomePage",
     components: {
         TheTwoColumnsLayout,
         Register,
-        Login
+        Login,
     },
     data() {
         return {
             componentName: "register",
-        }
+        };
     },
     methods: {
         changeComponent(payload) {
             this.componentName = payload.componentName;
-        }
-    }
+        },
+    },
 };
 </script>
 
