@@ -16,7 +16,7 @@
         </div>
     </template>
     <template #rightCol>
-
+        <Register></Register>
     </template>
     </TheTwoColumnsLayout>
 </template>
@@ -25,11 +25,13 @@
 // import TheTwoColumnsLayoutVue from "../layouts/TheTwoColumnsLayout.vue";
 // Alternative Schreibweise für den o.g. auskommentierten Import (Webpack ermöglicht die Referenz auf root/src mit @)
 import TheTwoColumnsLayout from '@/layouts/TheTwoColumnsLayout.vue';
+import Register from '@/components/auth/Register.vue';
 
 export default {
     name: "HomePage",
     components: {
-        TheTwoColumnsLayout
+        TheTwoColumnsLayout,
+        Register,
     }
 };
 </script>
