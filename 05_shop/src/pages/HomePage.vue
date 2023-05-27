@@ -16,7 +16,7 @@
         </div>
     </template>
     <template #rightCol>
-        <Register></Register>
+        <component :is="componentName" @change-component="changeComponent"></component>
     </template>
     </TheTwoColumnsLayout>
 </template>
@@ -26,12 +26,24 @@
 // Alternative Schreibweise für den o.g. auskommentierten Import (Webpack ermöglicht die Referenz auf root/src mit @)
 import TheTwoColumnsLayout from '@/layouts/TheTwoColumnsLayout.vue';
 import Register from '@/components/auth/Register.vue';
+import Login from '@/components/auth/Login.vue';
 
 export default {
     name: "HomePage",
     components: {
         TheTwoColumnsLayout,
         Register,
+        Login
+    },
+    data() {
+        return {
+            componentName: "register",
+        }
+    },
+    methods: {
+        changeComponent(payload) {
+            this.componentName = payload.componentName;
+        }
     }
 };
 </script>

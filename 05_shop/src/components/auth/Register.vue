@@ -7,7 +7,7 @@
             <h2>Jetzt registrieren</h2>
             <p>
                 oder
-                <a class="text-vue2" role="button"
+                <a class="text-vue2" role="button" @click="changeComponent('login')"
                     >melden Sie sich mit Ihrem Konto an</a
                 >
             </p>
@@ -85,6 +85,14 @@ export default {
         Form,
         Field,
     },
+    emits: {
+        'change-component': (payload) => {
+            if (payload.componentName !== "login") {
+                return false;
+            }
+            return true;
+        }
+    },
     data() {
         // Bilde Validierungs-Patterns für Yup.
         // Abbildung von: Name des Field in Form => Wert
@@ -108,6 +116,9 @@ export default {
         submitData(values) {
             console.log(values);
         },
+        changeComponent(componentName) {
+            this.$emit("change-component", { componentName });
+        }
     },
 };
 </script>
