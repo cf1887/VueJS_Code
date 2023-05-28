@@ -77,6 +77,32 @@ const actions = {
         };
         return context.dispatch("auth", signInDO);
     },
+    // Automatisches Einloggen
+    autoSignIn(context) {
+        const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('userId');
+        const expiresIn = localStorage.getItem('expiresIn');
+        const timeLeft = Number(expiresIn) - new Date().getTime();
+        // Wenn der Token abgelaufen ist
+        if (timeLeft < 0) {
+            // Hier könnte man mit dem 'refreshToken' von Firebase ein neues Token holen.
+            // Der Ansatz des Dozenten sieht aber keine Token-Erneuerung vor.
+            // Stattdessen wird die Funktion einfach beendet.
+            return;
+        }
+        // Setze Timer zurück (man ist schließlich neu eingeloggt)
+        timer = setTimeout(() => {
+            context.dispatch('autoSignOut');
+        }, expiresIn);
+        // Wenn token uns UserId gesetzt sind
+        if (token && userId) {
+            // Rufe Mutation 'setUser' auf
+            context.commit('setUser', {
+                token: token,
+                userId: userId,
+            });
+        }
+    },
     // Ausloggen beim (Firebase-)Backend
     signOut(context) {
         // Resette localStorage

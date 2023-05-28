@@ -6,6 +6,10 @@
 <script>
 export default {
     name: "App",
+    created() {
+        this.$store.dispatch('autoSignIn');
+        console.log('Automatisches Einloggen war erfolgreich!', this.$store);
+    }
 };
 </script>
 
