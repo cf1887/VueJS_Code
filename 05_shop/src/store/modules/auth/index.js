@@ -33,6 +33,14 @@ const actions = {
         return axios
             .post(url, authDO)
             .then((response) => {
+                // Ablaufdatum auslesen (mit 1000 multiplizieren, weil es in Sekunden angegeben wird und wir Millisekunden brauchen)
+                const expiresIn = Number(response.data.expiresIn) * 1000;
+                const expDate = new Date().getTime() + expiresIn;
+                // Daten im localStorage speichern
+                localStorage.setItem('token', response.data.idToken);
+                localStorage.setItem('userId', response.data.localId);
+                localStorage.setItem('expiresIn', expDate);
+                // Commit für Promise
                 context.commit("setUser", {
                     userId: response.data.localId,
                     token: response.data.idToken,
