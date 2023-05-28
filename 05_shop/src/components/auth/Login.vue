@@ -83,7 +83,7 @@ export default {
     },
     emits: {
         "change-component": (payload) => {
-            if (payload.componentName !== "login") {
+            if (payload.componentName !== "register") {
                 return false;
             }
             return true;
