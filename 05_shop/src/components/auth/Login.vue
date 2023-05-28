@@ -133,8 +133,12 @@ export default {
                     password: values.password,
                 })
                 .then(() => {
-                    // this.changeComponent("login");
                     console.log('Login erfolgreich', this.$store.state);
+                    // Weiterleitung zum internen Bereich
+                    // Kurzscheibweise: this.$router.push('/shop');
+                    this.$router.push({
+                        path: '/shop'
+                    });
                 })
                 .catch((error) => {
                     this.error = error.message;
