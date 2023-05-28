@@ -145,15 +145,15 @@ export default {
     methods: {
         submitData(values) {
             this.isLoading = true;
-            this.error = "";
+            this.error = '';
             this.$store
-                .dispatch("signUp", {
+                .dispatch('signUp', {
                     email: values.email,
                     password: values.password,
                 })
                 .then(() => {
-                    console.log(this.$store.state);
-                    this.changeComponent("login");
+                    this.changeComponent('login');
+                    console.log('Registrierung erfolgreich', this.$store.state);
                 })
                 .catch((error) => {
                     this.error = error.message;
@@ -163,7 +163,7 @@ export default {
                 });
         },
         changeComponent(componentName) {
-            this.$emit("change-component", { componentName });
+            this.$emit('change-component', { componentName });
         },
     },
 };

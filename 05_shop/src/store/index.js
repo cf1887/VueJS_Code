@@ -14,32 +14,55 @@ const store = createStore({
         }
     },
     actions: {
-        // Registrieren beim (Firebase-)Backend
-        async signUp(context, payload) {
-            // Das, was die Firebase-REST-API gemäß Dokumentation für eine Registrierung erwartet
-            // @link: https://firebase.google.com/docs/reference/rest/auth?hl=de#section-create-email-password
-            const signUpDO = {
+        auth(context, payload) {
+            let url = '';
+            if (payload.mode === 'signin') {
+                url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${FIREBASE_API_KEY}`;
+            }
+            else if (payload.mode === 'signup') {
+                url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${FIREBASE_API_KEY}`;
+            }
+            else {
+                return;
+            }
+
+            const authDO = {
                 email: payload.email,
                 password: payload.password,
                 returnSecureToken: true,
-            };
-            try {
-                const response = await axios
-                    .post(
-                        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${FIREBASE_API_KEY}`,
-                        signUpDO
-                    );
-                // console.log(response);
+            }
+
+            // Das, was die Firebase-REST-API gemäß Dokumentation für eine Registrierung erwartet
+            // @link: https://firebase.google.com/docs/reference/rest/auth?hl=de#section-create-email-password
+            return axios.post(url, authDO)
+            .then((response) => {
                 context.commit('setUser', {
                     userId: response.data.localId,
                     token: response.data.idToken,
                 });
-            } catch (error) {
-                // Hinweis: Die Interpolation des errors ermöglich den Zugriff und das Auslesen aller Informationen der Antwort.
-                // console.log({ error });
-                const errorMessage = new Error(error.response.data.error.message ?? "UNKNOWN_ERROR");
+            })
+            .catch((error) => {
+                const errorMessage = new Error(error.response.data.error.message ?? 'UNKNOWN_ERROR');
                 throw errorMessage;
+            });
+        },
+        // Registrieren beim (Firebase-)Backend
+        signUp(context, payload) {
+            // Der '...-Operator' heißt Spread-Operator
+            const signUpDO = {
+                ...payload,
+                mode: 'signup',
             }
+            return context.dispatch('auth', signUpDO);
+        },
+        // Einloggen beim (Firebase-)Backend
+        async signIn(context, payload) {
+            // Der '...-Operator' heißt Spread-Operator
+            const signInDO = {
+                ...payload,
+                mode: 'signin',
+            }
+            return context.dispatch('auth', signInDO);
         },
     },
     getters: {
