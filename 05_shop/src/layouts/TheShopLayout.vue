@@ -1,26 +1,29 @@
 <template>
-  <div>
-    <!-- Navbar -->
-    <main>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <slot>
-                        <h1>Hauptbereich</h1>
-                    </slot>
+    <div>
+        <TheNavbar />
+        <main>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <slot>
+                            <h1>Hauptbereich</h1>
+                        </slot>
+                    </div>
                 </div>
             </div>
-        </div>
-    </main>
-  </div>
+        </main>
+    </div>
 </template>
 
 <script>
+import TheNavbar from '@/components/TheNavbar.vue';
+
 export default {
-    name: "TheShopLayout"
-}
+    name: "TheShopLayout",
+    components: {
+        TheNavbar
+    }
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
