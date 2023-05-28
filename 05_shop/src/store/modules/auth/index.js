@@ -37,10 +37,10 @@ const actions = {
                 const expiresIn = Number(response.data.expiresIn) * 1000;
                 const expDate = new Date().getTime() + expiresIn;
                 // Daten im localStorage speichern
-                localStorage.setItem('token', response.data.idToken);
-                localStorage.setItem('userId', response.data.localId);
-                localStorage.setItem('expiresIn', expDate);
-                // Commit für Promise
+                localStorage.setItem("token", response.data.idToken);
+                localStorage.setItem("userId", response.data.localId);
+                localStorage.setItem("expiresIn", expDate);
+                // Commit (rufe Mutation auf)
                 context.commit("setUser", {
                     userId: response.data.localId,
                     token: response.data.idToken,
@@ -63,13 +63,25 @@ const actions = {
         return context.dispatch("auth", signUpDO);
     },
     // Einloggen beim (Firebase-)Backend
-    async signIn(context, payload) {
+    signIn(context, payload) {
         // Der '...-Operator' heißt Spread-Operator
         const signInDO = {
             ...payload,
             mode: "signin",
         };
         return context.dispatch("auth", signInDO);
+    },
+    // Ausloggen beim (Firebase-)Backend
+    signOut(context) {
+        // Resette localStorage
+        localStorage.removeItem("token");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("expiresIn");
+        // Setze Inhalte im Store zurück
+        context.commit('setUser', {
+            token: null,
+            userId: null,
+        });
     },
 };
 const getters = {};

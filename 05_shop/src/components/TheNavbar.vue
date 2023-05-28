@@ -17,7 +17,7 @@
             <button class="btn bg-vue me-3">
                 <i class="fas fa-shopping-card"></i> Warenkorb (10 €)
             </button>
-            <button class="btn bg-vue2">
+            <button class="btn bg-vue2" @click="signOut">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </button>
         </div>
@@ -27,6 +27,18 @@
 <script>
 export default {
     name: "TheNavbar",
+    methods: {
+        async signOut() {
+            // Hier könnte man auch einfach wieder den then-catch-Block nehmen, aber der Dozent wollte Abwechslung reinbringen...
+            try {
+                await this.$store.dispatch("signOut");
+                this.$router.push("/");
+            }
+            catch (error) {
+                console.error(error);
+            }
+        },
+    },
 };
 </script>
 
