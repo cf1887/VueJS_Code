@@ -90,8 +90,6 @@
 <script>
 import { Form, Field } from "vee-validate";
 import * as yup from "yup";
-import axios from "axios";
-import { FIREBASE_API_KEY } from "@/config/firebase.js";
 /* eslint-disable */
 export default {
     name: "Register",
@@ -148,26 +146,17 @@ export default {
         submitData(values) {
             this.isLoading = true;
             this.error = "";
-            // Das, was die Firebase-REST-API gemäß Dokumentation für eine Registrierung erwartet
-            // @link: https://firebase.google.com/docs/reference/rest/auth?hl=de#section-create-email-password
-            const signUpDO = {
-                email: values.email,
-                password: values.password,
-                returnSecureToken: true,
-            };
-            axios
-                .post(
-                    `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${FIREBASE_API_KEY}`,
-                    signUpDO
-                )
-                .then((response) => {
-                    console.log(response);
+            this.$store
+                .dispatch("signUp", {
+                    email: values.email,
+                    password: values.password,
+                })
+                .then(() => {
+                    console.log(this.$store.state);
                     this.changeComponent("login");
                 })
                 .catch((error) => {
-                    // Hinweis: Die Interpolation des errors ermöglich den Zugriff und das Auslesen aller Informationen der Antwort.
-                    // console.log({ error });
-                    this.error = error.response.data.error.message;
+                    this.error = error.message;
                 })
                 .finally(() => {
                     this.isLoading = false;
