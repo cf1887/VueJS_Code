@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '@/pages/HomePage.vue';
+import ShopPage from '@/pages/ShopPage.vue';
 
 /**
  * Ziel ist das klassische Routing für eine Single-Page-Application zu realisieren.
@@ -26,6 +27,10 @@ const router = createRouter({
             path: '/',
             component: HomePage,
         },
+        {
+            path: '/shop',
+            component: ShopPage,
+        }
     ]
 });
 
