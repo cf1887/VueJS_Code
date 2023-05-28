@@ -1,6 +1,8 @@
 import axios from "axios";
 import { FIREBASE_API_KEY } from "@/config/firebase.js";
 
+let timer;
+
 const state = {
     userId: null,
     token: null,
@@ -40,6 +42,10 @@ const actions = {
                 localStorage.setItem("token", response.data.idToken);
                 localStorage.setItem("userId", response.data.localId);
                 localStorage.setItem("expiresIn", expDate);
+                // Automatisch nach Ablauf des Tokens (= eine Stunde) ausloggen
+                timer = setTimeout(() => {
+                    context.dispatch('autoSignOut')
+                }, expiresIn);
                 // Commit (rufe Mutation auf)
                 context.commit("setUser", {
                     userId: response.data.localId,
@@ -77,11 +83,18 @@ const actions = {
         localStorage.removeItem("token");
         localStorage.removeItem("userId");
         localStorage.removeItem("expiresIn");
+        // Entferne den Timer für automatisches Ausloggen
+        clearTimeout(timer);
         // Setze Inhalte im Store zurück
         context.commit('setUser', {
             token: null,
             userId: null,
         });
+    },
+    // Automatisches Ausloggen
+    autoSignOut(context) {
+        // Weitere Serverkommunikation möglich, falls notwendig
+        context.dispatch('signOut');
     },
 };
 const getters = {};
