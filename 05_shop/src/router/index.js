@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "@/pages/HomePage.vue";
 import ShopPage from "@/pages/ShopPage.vue";
 import CreateProductPage from "@/pages/CreateProductPage.vue";
+import ReadProductPage from "@/pages/ReadProductPage.vue";
 import Store from "@/store/index.js";
 
 /**
@@ -44,17 +45,26 @@ const router = createRouter({
             },
         },
         {
-            path: '/shop/create/product',
+            path: "/shop/create/product",
             component: CreateProductPage,
-        }
+            meta: {
+                requiresAuth: true,
+            },
+        },
+        {
+            path: "/shop/read/product/:id",
+            component: ReadProductPage,
+            meta: {
+                requiresAuth: true,
+            },
+        },
     ],
 });
 
 router.beforeEach((to, from, next) => {
     if (to.meta.requiresAuth && !Store.getters.isAuthenticated) {
-        next('/');
-    }
-    else {
+        next("/");
+    } else {
         next();
     }
 });

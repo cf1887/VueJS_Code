@@ -26,7 +26,7 @@ const actions = {
                         ...response.data[id],
                     });
                 }
-                context.commit('setProducts', productsDO);
+                context.commit("setProducts", productsDO);
             })
             .catch((error) => {
                 console.error(error);
@@ -53,7 +53,19 @@ const actions = {
     },
 };
 const getters = {
-    products: (state) => state.products,
+    products: (state) => {
+        return state.products;
+    },
+
+    // Syntax für Getter mit Argumenten (doppelte Arrow-Funktion).
+    // In diesem Fall ist das Argument, welches dem Getter übergeben wird, die Id (sinngemäß: 'getProductById').
+    product: (state) => (id) => {
+        return state.products.find((product) => {
+            if (product.id === id) {
+                return product;
+            }
+        });
+    },
 };
 
 const shopModule = {

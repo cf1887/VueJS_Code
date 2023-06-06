@@ -60,6 +60,20 @@ export default {
     components: {
         TheShopLayout,
     },
+    data() {
+        return {
+            id: null,
+        };
+    },
+    computed: {
+        product() {
+            return this.$store.getters.product(this.id);
+        }
+    },
+    created() {
+        // Die Id dieses Produkts setzen bei Erstellung (wird vom Router übergeben)
+        this.id = this.$route.params.id;
+    }
 };
 </script>
 

@@ -10,6 +10,10 @@
                 </div>
             </div>
         </div>
+        <router-link
+            :to="`/shop/read/product/${product.id}`"
+            class="stretched-link"
+        ></router-link>
     </div>
 </template>
 
@@ -23,12 +27,11 @@ export default {
         shortenDescription() {
             if (this.product.description.length < 80) {
                 return this.product.description;
-            }
-            else {
+            } else {
                 return this.product.description.slice(0, 80) + "...";
             }
-        }
-    }
+        },
+    },
 };
 </script>
 
