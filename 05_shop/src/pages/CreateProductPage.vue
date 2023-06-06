@@ -23,26 +23,20 @@
                                     <div class="row">
                                         <div class="col-9">
                                             <h5 class="card-title mb-4">
-                                                Produkttitel
+                                                {{ product.title }}
                                             </h5>
                                         </div>
                                         <div class="col-3">
                                             <div class="d-grid">
                                                 <button class="btn bg-vue2">
-                                                    15 €
+                                                    {{ product.price }}
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-12">
-                                            Lorem ipsum dolor sit, amet
-                                            consectetur adipisicing elit. Ipsum
-                                            dolorem quod laborum? Nulla aliquid
-                                            minus ipsam ut velit officia
-                                            voluptatem possimus mollitia tenetur
-                                            sequi? Mollitia nostrum fugiat et
-                                            cum vero?
+                                            {{ product.description }}
                                         </div>
                                     </div>
                                 </div>
@@ -61,6 +55,18 @@ export default {
     name: "CreateProductPage",
     components: {
         TheShopLayout,
+    },
+    data() {
+        return {
+            product: {
+                title: "Produkt " + Math.ceil(Math.random() * 10000),
+                description: `Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Ipsum dolorem quod laborum?
+                Nulla aliquid minus ipsam ut velit officia voluptatem possimus mollitia tenetur sequi?
+                Mollitia nostrum fugiat et cum vero?`,
+                price: Math.ceil(Math.random() * 100),
+            },
+        };
     },
 };
 </script>
