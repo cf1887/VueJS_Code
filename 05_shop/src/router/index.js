@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "@/pages/HomePage.vue";
 import ShopPage from "@/pages/ShopPage.vue";
+import CreateProductPage from "@/pages/CreateProductPage.vue";
 import Store from "@/store/index.js";
 
 /**
@@ -42,6 +43,10 @@ const router = createRouter({
                 requiresAuth: true,
             },
         },
+        {
+            path: '/shop/create/product',
+            component: CreateProductPage,
+        }
     ],
 });
 

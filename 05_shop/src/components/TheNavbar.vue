@@ -9,7 +9,7 @@
                     >
                 </li>
                 <li class="nav-item active">
-                    <router-link to="/shop/item/create" class="nav-link"
+                    <router-link to="/shop/create/product" class="nav-link"
                         >Neuer Artikel</router-link
                     >
                 </li>
