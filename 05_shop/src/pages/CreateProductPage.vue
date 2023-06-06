@@ -5,7 +5,10 @@
                 <div class="col-12">
                     <h1 class="mt-4">
                         Neuer Artikel
-                        <button class="btn btn-lg bg-vue float-end">
+                        <button
+                            class="btn btn-lg bg-vue float-end"
+                            @click="createProduct()"
+                        >
                             Speichern
                         </button>
                     </h1>
@@ -67,6 +70,11 @@ export default {
                 price: Math.ceil(Math.random() * 100),
             },
         };
+    },
+    methods: {
+        createProduct() {
+            this.$store.dispatch('storeProduct', this.product);
+        },
     },
 };
 </script>
