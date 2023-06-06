@@ -6,9 +6,24 @@
 <script>
 export default {
     name: "App",
+    computed: {
+        token() {
+            return this.$store.getters.token;
+        }
+    },
     created() {
         this.$store.dispatch('autoSignIn');
         console.log('Automatisches Einloggen war erfolgreich!', this.$store);
+    },
+    watch: {
+        token: {
+            handler() {
+                if (this.token) {
+                    this.$store.dispatch('fetchProducts');
+                }
+            },
+            immediate: true
+        }
     }
 };
 </script>

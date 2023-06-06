@@ -125,6 +125,7 @@ const actions = {
 };
 const getters = {
     isAuthenticated: (state) => Boolean(state.token),
+    token: (state) => state.token,
 };
 
 const authModule = {
