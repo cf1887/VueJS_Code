@@ -123,7 +123,9 @@ const actions = {
         context.dispatch('signOut');
     },
 };
-const getters = {};
+const getters = {
+    isAuthenticated: (state) => Boolean(state.token),
+};
 
 const authModule = {
     state,
