@@ -47,6 +47,17 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card mt-4">
+                        <div class="card-body">
+                            <h4>Das könnte Sie auch interessieren...</h4>
+                            <router-link
+                                :to="{
+                                    name: 'ReadProduct',
+                                    params: { id: '-NXFH6FQj_Fizozr6wBy' },
+                                }"
+                            >-NXFH6FQj_Fizozr6wBy</router-link>
+                        </div>
+                    </div>
                 </div>
             </div>
         </template>
@@ -68,12 +79,16 @@ export default {
     computed: {
         product() {
             return this.$store.getters.product(this.id);
-        }
+        },
     },
     created() {
         // Die Id dieses Produkts setzen bei Erstellung (wird vom Router übergeben)
         this.id = this.$route.params.id;
-    }
+    },
+    beforeRouteUpdate(to) {
+        // Wird ausgeführt, wenn die Component gleich bleibt, aber sich die Route ändert.
+        this.id = to.params.id;
+    },
 };
 </script>
 
