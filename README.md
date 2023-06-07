@@ -12,6 +12,7 @@ ___
 - [Zusammenfassung der grundlegenden Vue-Funktionalitäten](#zusammenfassung-der-grundlegenden-vue-funktionalitäten)
 - [Zusammenfassung zu Transitions](#zusammenfassung-zu-transitions)
 - [Zusammenfassung zum Kanban-Board](#zusammenfassung-zum-kanban-board)
+- [Zusammenfassung zum Shop](#zusammenfassung-zum-shop)
 
 ___
 
@@ -68,3 +69,16 @@ ___
 | Argument einer eigenen Directive (=== "Attribut") dynamisch binden | Dynamic Arguments |
 | Template-Blöcke außerhalb des "Vue"-Bereichs verschieben | Teleport-Tag |
 
+___
+
+## Zusammenfassung zum Shop
+
+| Abschluss | Stichwort in Vue-Doc |
+|-----------|----------------------|
+| Layout-, Page-, Components, Store, Router | Ordnerstruktur |
+| Slot-Layout Strategie und Router-View Strategie | Layouts |
+| Formulare mit VeeValidate und Yup validiert | Formulare |
+| Dauerhafte Speicherung der Daten mit einem Backend (hier Firebase) | Backend & Datenbank |
+| Routing | Vue-Router |
+| State Management (sinngemäß: die Verwendung von Stores) | Vuex |
+| Debugging | Vue-Devtools |
