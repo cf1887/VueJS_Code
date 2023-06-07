@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 // import HomePage from "@/pages/HomePage.vue";
 // import ShopPage from "@/pages/ShopPage.vue";
-import CreateProductPage from "@/pages/CreateProductPage.vue";
+// import CreateProductPage from "@/pages/CreateProductPage.vue";
 // import ReadProductPage from "@/pages/ReadProductPage.vue";
+import routes from "./routes";
 import NotFoundPage from "@/pages/NotFoundPage.vue";
 import Store from "@/store/index.js";
 
@@ -27,45 +28,7 @@ const router = createRouter({
     // Optionen
     history: createWebHistory(),
     routes: [
-        {
-            path: "/",
-            alias: "/home",
-            // Vorher (einfache Variante):
-            // component: HomePage
-            // Lazy-Loading realisieren:
-            component: () => import(/* webpackChunkName: 'group-shop' */"@/pages/HomePage.vue"),
-            beforeEnter: (to, from, next) => {
-                if (Store.getters.isAuthenticated) {
-                    next("/shop");
-                } else {
-                    next();
-                }
-            },
-        },
-        {
-            path: "/shop",
-            component: () => import(/* webpackChunkName: 'group-shop' */"@/pages/ShopPage.vue"),
-            meta: {
-                requiresAuth: true,
-            },
-        },
-        {
-            path: "/shop/create/product",
-            component: CreateProductPage,
-            meta: {
-                requiresAuth: true,
-            },
-        },
-        {
-            path: "/shop/read/product/:id",
-            name: "ReadProduct",
-            component: () => import(/* webpackChunkName: 'group-shop' */"@/pages/ReadProductPage.vue"),
-            props: true,
-            meta: {
-                requiresAuth: true,
-                enterTransition: "rubberBand",
-            },
-        },
+        ...routes,
         /**
          * Das hier ist das Routing für die NotFoundPage.
          * Sie sollte IMMER als letzter Routing-Eintrag registriert werden,
