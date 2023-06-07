@@ -75,6 +75,8 @@ const router = createRouter({
             // In dem Path-Attribut können Regex verwendet werden!
             path: "/:pathMatch(.*)*",
             component: NotFoundPage,
+            // Alternative Variante zur NotFoundPage: Redirect zur Startseite
+            // redirect: '/'
         },
     ],
 });
