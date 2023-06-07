@@ -1,5 +1,15 @@
 <template>
     <!-- Das hier ist die Einstiegs-Component für den Vue-Router -->
+    <!-- <router-view v-slot="{ Component }">
+        <transition
+            :enter-active-class="`animate__animated animate__${$route.meta.enterTransition}`"
+            leave-active-class="animate__animated animate__fadeOut"
+            mode="out-in"
+        >
+            <component :is="Component" :key="$route.path"></component>
+        </transition>
+    </router-view> -->
+    <!-- Kurzform: -->
     <router-view></router-view>
 </template>
 
@@ -9,22 +19,22 @@ export default {
     computed: {
         token() {
             return this.$store.getters.token;
-        }
+        },
     },
     created() {
-        this.$store.dispatch('autoSignIn');
-        console.log('Automatisches Einloggen war erfolgreich!', this.$store);
+        this.$store.dispatch("autoSignIn");
+        console.log("Automatisches Einloggen war erfolgreich!", this.$store);
     },
     watch: {
         token: {
             handler() {
                 if (this.token) {
-                    this.$store.dispatch('fetchProducts');
+                    this.$store.dispatch("fetchProducts");
                 }
             },
-            immediate: true
-        }
-    }
+            immediate: true,
+        },
+    },
 };
 </script>
 
