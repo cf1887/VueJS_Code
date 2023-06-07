@@ -15,7 +15,7 @@
                 </li>
             </ul>
             <button class="btn bg-vue me-3">
-                <i class="fas fa-shopping-card"></i> Warenkorb (10 €)
+                <i class="fas fa-shopping-card"></i> Warenkorb ({{ cartSum }} €)
             </button>
             <button class="btn bg-vue2" @click="signOut">
                 <i class="fas fa-sign-out-alt"></i> Logout
@@ -25,16 +25,25 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
     name: "TheNavbar",
+    // computed: {
+    //     cartTotal() {
+    //         return this.$store.getters.cartTotal;
+    //     },
+    // },
+    computed: {
+        // ...mapGetters(["cartTotal"]),
+        ...mapGetters({ cartSum: 'cartTotal' }),
+    },
     methods: {
         async signOut() {
             // Hier könnte man auch einfach wieder den then-catch-Block nehmen, aber der Dozent wollte Abwechslung reinbringen...
             try {
                 await this.$store.dispatch("signOut");
                 this.$router.push("/");
-            }
-            catch (error) {
+            } catch (error) {
                 console.error(error);
             }
         },
