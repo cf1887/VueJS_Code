@@ -3,6 +3,7 @@ import HomePage from "@/pages/HomePage.vue";
 import ShopPage from "@/pages/ShopPage.vue";
 import CreateProductPage from "@/pages/CreateProductPage.vue";
 import ReadProductPage from "@/pages/ReadProductPage.vue";
+import NotFoundPage from "@/pages/NotFoundPage.vue";
 import Store from "@/store/index.js";
 
 /**
@@ -60,6 +61,20 @@ const router = createRouter({
             meta: {
                 requiresAuth: true,
             },
+        },
+        /**
+         * Das hier ist das Routing für die NotFoundPage.
+         * Sie sollte IMMER als letzter Routing-Eintrag registriert werden,
+         * denn der Regex '/:pathMatch(.*)*' gibt immer true zurück.
+         * Das bedeutet, wenn bis hier hin noch kein Treffer einer Url
+         * in den vorherigen Routing-Objekten vorliegt, dann wird dieses
+         * Routing-Objekt angestoßen und liefert DEFAULT die NotFoundPage aus.
+         * (Im Prinzip: Wenn nicht vorher schon gefunden, liefere default NotFoundPage).
+         */
+        {
+            // In dem Path-Attribut können Regex verwendet werden!
+            path: "/:pathMatch(.*)*",
+            component: NotFoundPage,
         },
     ],
 });
