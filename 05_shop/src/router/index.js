@@ -28,6 +28,7 @@ const router = createRouter({
     routes: [
         {
             path: "/",
+            alias: "/home",
             component: HomePage,
             beforeEnter: (to, from, next) => {
                 if (Store.getters.isAuthenticated) {
