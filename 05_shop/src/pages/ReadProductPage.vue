@@ -32,7 +32,14 @@
                                         </div>
                                         <div class="col-3">
                                             <div class="d-grid">
-                                                <button class="btn bg-vue2">
+                                                <button
+                                                    class="btn bg-vue2"
+                                                    @click="
+                                                        addProduct({
+                                                            productId: id,
+                                                        })
+                                                    "
+                                                >
                                                     {{ product.price }}
                                                 </button>
                                             </div>
@@ -55,7 +62,8 @@
                                     name: 'ReadProduct',
                                     params: { id: '-NXFH6FQj_Fizozr6wBy' },
                                 }"
-                            >-NXFH6FQj_Fizozr6wBy</router-link>
+                                >-NXFH6FQj_Fizozr6wBy</router-link
+                            >
                         </div>
                     </div>
                 </div>
@@ -65,6 +73,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import TheShopLayout from "@/layouts/TheShopLayout.vue";
 export default {
     name: "ReadProductPage",
@@ -92,6 +101,16 @@ export default {
     //     // Wird ausgeführt, wenn die Component gleich bleibt, aber sich die Route ändert.
     //     this.id = to.params.id;
     // },
+    // methods: {
+    //     addItemToCart() {
+    //         this.$store.dispatch("addItemToCart", {
+    //             productId: this.id,
+    //         });
+    //     }
+    // }
+    methods: {
+        ...mapActions({ addProduct: "addItemToCart" }),
+    },
 };
 </script>
 
