@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { ref, reactive, toRefs, computed } from "vue";
+import { ref, reactive, toRefs, computed, onMounted } from "vue";
 export default {
     name: "HelloWorld",
     /**
@@ -60,6 +60,10 @@ export default {
             greetingObject.message = "Servus";
             greetingObject.description = "Beschreibung aktualisiert!";
         };
+
+        onMounted(() => {
+            console.log("Component mounted");
+        });
 
         // Am Ende der Logik wird ein Objekt mit Schlüssel-Werte-Paaren zurückgegeben.
         return {
