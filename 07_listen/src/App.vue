@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div v-if="!loading">
-                <ListingsList :listings="listings" :darkMode="darkMode" />
+                <ListingsList :listings="listings" />
             </div>
             <button
                 class="btn mt-2"

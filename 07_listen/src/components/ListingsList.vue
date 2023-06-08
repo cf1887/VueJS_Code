@@ -2,12 +2,11 @@
     <div id="listings">
         <Notification
             :notification="notification"
-            :isDark="isDark"
             :toggleNotification="toggleNotification"
         />
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <div class="col" v-for="listing in listings" :key="listing.id">
-                <ListingsListItem :listing="listing" :isDark="isDark" />
+                <ListingsListItem :listing="listing" />
             </div>
         </div>
         <button
@@ -25,6 +24,7 @@ import { onMounted } from "vue";
 import { useStore } from "vuex";
 // import { mapActions } from "vuex";
 import useNotification from "@/hooks/useNotification";
+import useDarkMode from "@/hooks/useDarkMode";
 import ListingsListItem from "./ListingsListItem";
 import Notification from "./Notification";
 
@@ -34,7 +34,7 @@ export default {
         ListingsListItem,
         Notification,
     },
-    props: ["listings", "isDark"],
+    props: ["listings"],
 
     setup() {
         // Store:
@@ -43,6 +43,7 @@ export default {
         // const notification = ref(null);
         const { notification, setNotification, toggleNotification } =
             useNotification();
+        const { darkMode } = useDarkMode();
         // Methods:
         const resetListings = () => {
             setNotification("Liste wurde zurückgesetzt.");
@@ -58,6 +59,7 @@ export default {
         });
 
         return {
+            darkMode,
             notification,
             resetListings,
             toggleNotification,
