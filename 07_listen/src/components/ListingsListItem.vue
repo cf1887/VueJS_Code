@@ -47,6 +47,7 @@
 
 <script>
 import { useStore } from "vuex";
+// import useNotification from "@/hooks/useNotification";
 // import { mapActions } from "vuex";
 
 export default {
@@ -56,7 +57,11 @@ export default {
     // Store
     const store = useStore();
     // Methods
-    const removeListing = () => store.dispatch("removeListing", props.listing);
+    // const { setNotification } = useNotification();
+    const removeListing = () => {
+        // setNotification("Element von der Liste entfernt.");
+        store.dispatch("removeListing", props.listing);
+    }
     return {
         removeListing,
     };
