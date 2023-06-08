@@ -1,6 +1,6 @@
 <template>
     <div class="app" :class="{ 'bg-dark': darkMode }">
-        <div class="container mt-5">
+        <div class="container pt-5">
             <div v-if="loading">
                 <div class="progress" style="height: 10px">
                     <div

@@ -2,7 +2,7 @@
     <div
         v-if="notification.active"
         class="alert alert-dismissible"
-        :class="{ 'alert-light': isDark, 'alert-dark': !isDark }"
+        :class="{ 'alert-light': darkMode, 'alert-dark': !darkMode }"
     >
         {{ notification.message }}
         <button
@@ -15,8 +15,15 @@
 </template>
 
 <script>
+import useDarkMode from "@/hooks/useDarkMode";
 export default {
     name: "Notification",
-    props: ["notification", "isDark", "toggleNotification"],
+    props: ["notification", "toggleNotification"],
+    setup() {
+        const { darkMode } = useDarkMode();
+        return {
+            darkMode,
+        }
+    },
 };
 </script>
