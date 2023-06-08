@@ -1,53 +1,92 @@
 <template>
-  <div class="app" :class="{ 'bg-dark': isDark }">
-    <div class="container mt-5">
-      <div v-if="loading">
-        <div class="progress" style="height: 10px">
-          <div class="progress-bar" role="progressbar" style="width: 60%"></div>
+    <div class="app" :class="{ 'bg-dark': isDark }">
+        <div class="container mt-5">
+            <div v-if="loading">
+                <div class="progress" style="height: 10px">
+                    <div
+                        class="progress-bar"
+                        role="progressbar"
+                        style="width: 60%"
+                    ></div>
+                </div>
+            </div>
+            <div v-if="!loading">
+                <ListingsList :listings="listings" :isDark="isDark" />
+            </div>
+            <button
+                class="btn mt-2"
+                :class="{ 'btn-light': isDark, 'btn-dark': !isDark }"
+                @click="toggleDarkMode"
+            >
+                {{ darkModeButtonText }}
+            </button>
         </div>
-      </div>
-      <div v-if="!loading">
-        <ListingsList :listings="listings" :isDark="isDark" />
-      </div>
-      <button
-        class="btn mt-2"
-        :class="{ 'btn-light': isDark, 'btn-dark': !isDark }"
-        @click="toggleDarkMode"
-      >
-        {{ darkModeButtonText }}
-      </button>
     </div>
-  </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { ref, computed } from "vue";
+import { useStore } from "vuex";
+// import { mapGetters } from "vuex";
 import ListingsList from "./components/ListingsList";
 
 export default {
-  name: "App",
-  data() {
-    return {
-      isDark: false,
-    };
-  },
-  computed: {
-    ...mapGetters(["listings", "loading"]),
-    darkModeButtonText() {
-      return this.isDark ? "Helle Ansicht" : "Dunkle Ansicht";
+    name: "App",
+    components: {
+        ListingsList,
     },
-  },
-  methods: {
-    toggleDarkMode() {
-      this.isDark = !this.isDark;
+    // Wird ausgeführt, BEVOR die Component erzeugt wird und NACHDEM die Props verfügbar sind.
+    setup() {
+        // Das hier ist das ehemalige data-Attribut (in diesem Fall ist es ein primitiver Datentyp (bool)).
+        const isDark = ref(false);
+        // Das hier sind die computed properties.
+        // Hinweis: für den ...mapGetters()-Aufruf gibt es einen Workaround mit der useStore()-Funktion von vuex.
+        const store = useStore();
+        const darkModeButtonText = computed(() => {
+            return isDark.value ? "Helle Ansicht" : "Dunkle Ansicht";
+        });
+        const listings = computed(() => store.getters.listings);
+        const loading = computed(() => store.getters.loading);
+        // Das hier sind die methods.
+        const toggleDarkMode = () => {
+            isDark.value = !isDark.value;
+        };
+        // Das hier ist der created-Hook.
+        // Da die setup()-Funktion der Composition-API bekanntlich ausgeführt wird,
+        // BEVOR die Component erzeugt wird und NACHDEM die Props verfügbar sind,
+        // ist diese Funktion quasi äquivalent zum 'created'-hook.
+        store.dispatch("getListings");
+
+        // Gib alles, was im Template verwendet werden soll, in diesem Objekt zurück.
+        return {
+            isDark,
+            darkModeButtonText,
+            listings,
+            loading,
+            toggleDarkMode,
+        };
     },
-  },
-  created() {
-    this.$store.dispatch("getListings");
-  },
-  components: {
-    ListingsList,
-  },
+
+    /** VORHER MIT OPTIONS-API: */
+    // data() {
+    //     return {
+    //         isDark: false,
+    //     };
+    // },
+    // computed: {
+    //     ...mapGetters(["listings", "loading"]),
+    //     darkModeButtonText() {
+    //         return this.isDark ? "Helle Ansicht" : "Dunkle Ansicht";
+    //     },
+    // },
+    // methods: {
+    //     toggleDarkMode() {
+    //         this.isDark = !this.isDark;
+    //     },
+    // },
+    // created() {
+    //     this.$store.dispatch("getListings");
+    // },
 };
 </script>
 
@@ -57,14 +96,14 @@ export default {
 html,
 body,
 #app {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 </style>
 
 <style scoped>
 .app {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 </style>
