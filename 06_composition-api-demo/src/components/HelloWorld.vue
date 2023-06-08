@@ -6,11 +6,16 @@
                 Aktualisiere die Begrüßung
             </button>
         </h1>
+        <hr />
+        <h1>
+            {{ greetingObject.message }} - {{ greetingObject.description }}
+            <button @click="updateGreetingObject()">Aktualisiere die Begrüßung</button>
+        </h1>
     </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 export default {
     name: "HelloWorld",
     /**
@@ -20,17 +25,33 @@ export default {
     setup() {
         // Hier würde man die ganze Logik hineinschreiben.
 
+        /**
+         * Verwendung der ref()-Funktion zum Hinzufügen von primitiven Datentypen in das Reaktivsystem.
+         */
         const getGreeting = ref("Moin!");
         console.log(getGreeting);
-
         const updateGreeting = () => {
             return (getGreeting.value = "Herzlich Willkommen!");
+        };
+
+        /**
+         * Verwendung der reactive()-Funktion zum Hinzufügen von nicht-primitiven Datentypen in das Reaktivsystem.
+         */
+        const greetingObject = reactive({
+            message: "Salut",
+            description: "Willkommen zur App!",
+        });
+        const updateGreetingObject = () => {
+            greetingObject.message = "Servus";
+            greetingObject.description = "Beschreibung aktualisiert!";
         };
 
         // Am Ende der Logik wird ein Objekt mit Schlüssel-Werte-Paaren zurückgegeben.
         return {
             getGreeting,
-            updateGreeting
+            updateGreeting,
+            greetingObject,
+            updateGreetingObject,
         };
     },
 };
