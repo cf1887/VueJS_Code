@@ -11,11 +11,13 @@
             {{ greetingObject.message }} - {{ greetingObject.description }}
             <button @click="updateGreetingObject()">Aktualisiere die Begrüßung</button>
         </h1>
+        <hr />
+        <h2>{{ message }} - {{ description }}</h2>
     </div>
 </template>
 
 <script>
-import { ref, reactive } from "vue";
+import { ref, reactive, toRefs } from "vue";
 export default {
     name: "HelloWorld",
     /**
@@ -41,6 +43,14 @@ export default {
             message: "Salut",
             description: "Willkommen zur App!",
         });
+        /** 
+         * Wandle jedes Schlüssel-Werte-Paar des Objekts in ein Ref um.
+         * Ein Ref ist ein REAKTIVES Objekt, d.h. wenn man normalerweise Schlüssel-Werte-Paare aus einem
+         * nicht-toRef-Objekt in eine Variable speichert, sind diese nicht reaktiv (sie aktualisieren sich bei Veränderung nicht mit).
+         * Die Funktion toRefs() ermöglicht ein solches reaktives Verhalten.
+         */
+        const greetingObjectRefs = toRefs(greetingObject);
+        const { message, description } = greetingObjectRefs;
         const updateGreetingObject = () => {
             greetingObject.message = "Servus";
             greetingObject.description = "Beschreibung aktualisiert!";
@@ -52,6 +62,8 @@ export default {
             updateGreeting,
             greetingObject,
             updateGreetingObject,
+            message,
+            description,
         };
     },
 };
