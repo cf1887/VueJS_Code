@@ -1,7 +1,7 @@
 <template>
     <div class="hello">
         <h1>
-            {{ getGreeting }}
+            {{ getGreeting }} - {{ greetingReverse }}
             <button @click="updateGreeting()">
                 Aktualisiere die Begrüßung
             </button>
@@ -9,7 +9,9 @@
         <hr />
         <h1>
             {{ greetingObject.message }} - {{ greetingObject.description }}
-            <button @click="updateGreetingObject()">Aktualisiere die Begrüßung</button>
+            <button @click="updateGreetingObject()">
+                Aktualisiere die Begrüßung
+            </button>
         </h1>
         <hr />
         <h2>{{ message }} - {{ description }}</h2>
@@ -17,7 +19,7 @@
 </template>
 
 <script>
-import { ref, reactive, toRefs } from "vue";
+import { ref, reactive, toRefs, computed } from "vue";
 export default {
     name: "HelloWorld",
     /**
@@ -35,6 +37,9 @@ export default {
         const updateGreeting = () => {
             return (getGreeting.value = "Herzlich Willkommen!");
         };
+        const greetingReverse = computed(() => {
+            return getGreeting.value.split("").reverse().join("");
+        });
 
         /**
          * Verwendung der reactive()-Funktion zum Hinzufügen von nicht-primitiven Datentypen in das Reaktivsystem.
@@ -43,7 +48,7 @@ export default {
             message: "Salut",
             description: "Willkommen zur App!",
         });
-        /** 
+        /**
          * Wandle jedes Schlüssel-Werte-Paar des Objekts in ein Ref um.
          * Ein Ref ist ein REAKTIVES Objekt, d.h. wenn man normalerweise Schlüssel-Werte-Paare aus einem
          * nicht-toRef-Objekt in eine Variable speichert, sind diese nicht reaktiv (sie aktualisieren sich bei Veränderung nicht mit).
@@ -60,6 +65,7 @@ export default {
         return {
             getGreeting,
             updateGreeting,
+            greetingReverse,
             greetingObject,
             updateGreetingObject,
             message,
