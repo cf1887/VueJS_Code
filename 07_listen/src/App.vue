@@ -25,8 +25,7 @@
 </template>
 
 <script>
-import { computed } from "vue";
-import { useStore } from "vuex";
+import { computed, inject } from "vue";
 // import { mapGetters } from "vuex";
 import useDarkMode from "@/hooks/useDarkMode";
 import ListingsList from "./components/ListingsList";
@@ -43,12 +42,13 @@ export default {
         const { darkMode, toggleDarkMode } = useDarkMode();
         // Das hier sind die computed properties.
         // Hinweis: für den ...mapGetters()-Aufruf gibt es einen Workaround mit der useStore()-Funktion von vuex.
-        const store = useStore();
+        // const store = useStore();
+        const store = inject("store");
         const darkModeButtonText = computed(() => {
             return darkMode.value ? "Helle Ansicht" : "Dunkle Ansicht";
         });
-        const listings = computed(() => store.getters.listings);
-        const loading = computed(() => store.getters.loading);
+        const listings = computed(() => store.state.listings);
+        const loading = computed(() => store.state.loading);
         // Das hier sind die methods.
         // const toggleDarkMode = () => {
         //     isDark.value = !isDark.value;
@@ -57,7 +57,8 @@ export default {
         // Da die setup()-Funktion der Composition-API bekanntlich ausgeführt wird,
         // BEVOR die Component erzeugt wird und NACHDEM die Props verfügbar sind,
         // ist diese Funktion quasi äquivalent zum 'created'-hook.
-        store.dispatch("getListings");
+        // store.dispatch("getListings");
+        store.actions.getListings();
 
         // Gib alles, was im Template verwendet werden soll, in diesem Objekt zurück.
         return {

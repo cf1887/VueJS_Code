@@ -2,6 +2,11 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import store from "./store";
 
+/** VUEX-VARIANTE */
+// createApp(App)
+//   .use(store)
+//   .mount("#app");
+
 createApp(App)
-  .use(store)
+  .provide("store", store)
   .mount("#app");

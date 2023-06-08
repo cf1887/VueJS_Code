@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import { onMounted } from "vue";
-import { useStore } from "vuex";
+import { onMounted, inject } from "vue";
+// import { useStore } from "vuex";
 // import { mapActions } from "vuex";
 import useNotification from "@/hooks/useNotification";
 import useDarkMode from "@/hooks/useDarkMode";
@@ -38,7 +38,8 @@ export default {
 
     setup() {
         // Store:
-        const store = useStore();
+        // const store = useStore();
+        const store = inject("store");
         // Data:
         // const notification = ref(null);
         const { notification, setNotification, toggleNotification } =
@@ -47,7 +48,8 @@ export default {
         // Methods:
         const resetListings = () => {
             setNotification("Liste wurde zurückgesetzt.");
-            store.dispatch("resetListings");
+            // store.dispatch("resetListings");
+            store.actions.resetListings();
         };
         // Mounted-Hook:
         onMounted(() => {
