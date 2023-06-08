@@ -1,10 +1,16 @@
 <template>
     <div class="hello">
-      <h1>{{ getGreeting }}</h1>
+        <h1>
+            {{ getGreeting }}
+            <button @click="updateGreeting()">
+                Aktualisiere die Begrüßung
+            </button>
+        </h1>
     </div>
 </template>
 
 <script>
+import { ref } from "vue";
 export default {
     name: "HelloWorld",
     /**
@@ -12,13 +18,21 @@ export default {
      * Wird ausgeführt, BEVOR die Component erzeugt wird und NACHDEM die Props verfügbar sind.
      */
     setup() {
-      // Hier würde man die ganze Logik hineinschreiben.
+        // Hier würde man die ganze Logik hineinschreiben.
 
-      // Am Ende der Logik wird ein Objekt mit Schlüssel-Werte-Paaren zurückgegeben.
-      return {
-        getGreeting: "Moin!",
-      };
-    }
+        const getGreeting = ref("Moin!");
+        console.log(getGreeting);
+
+        const updateGreeting = () => {
+            return (getGreeting.value = "Herzlich Willkommen!");
+        };
+
+        // Am Ende der Logik wird ein Objekt mit Schlüssel-Werte-Paaren zurückgegeben.
+        return {
+            getGreeting,
+            updateGreeting
+        };
+    },
 };
 </script>
 
