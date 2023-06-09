@@ -177,4 +177,34 @@ describe("App.vue-Component", () => {
             });
         });
     });
+
+    /**
+     * Neue Testgruppe zum Testen des 'Alle entfernen'-Buttons.
+     */
+    describe('Die Benutzer:innen klicken auf das \'Alle entfernen\'-Span.', () => {
+        // Benötigte Variablen:
+        let itemList;
+        let removeItemsSpan;
+
+        /**
+         * Vor jedem Test der Testgruppe:
+         * Setze Daten innerhalb der App.vue-Component.
+         */
+        beforeEach(async () => {
+            itemList = wrapper.find('.item-list');
+            removeItemsSpan = wrapper.find('.float-end');
+            wrapper.setData({
+                items: ['Testeintrag01', 'Testeintrag02', 'Testeintrag03'],
+            });
+            await removeItemsSpan.trigger('click');
+        });
+
+        /**
+         * Prüfe, ob alle Einträge aus dem 'items'-Datenattribut aus der App.vue-Component gelöscht worden sein
+         */
+        it('Alle Einträge sollten aus dem \'items\'-Datenattribut gelöscht sein.', () => {
+            expect(wrapper.vm.items).to.deep.equal([]);
+            expect(itemList.html()).to.not.contain('<td class="fs-4">Testeintrag01</td>');
+        });
+    });
 });
