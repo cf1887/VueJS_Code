@@ -124,5 +124,57 @@ describe("App.vue-Component", () => {
                 expect(wrapper.vm.item).to.equal("");
             });
         });
+
+        /**
+         * Weitere Untergruppe zum Abschicken des Formulars
+         */
+        describe('Die Benutzer:innen senden das Formular ab.', () => {
+            // Benötigte Variablen
+            let addItemButton;
+            let itemList;
+            let inputField;
+
+            /**
+             * Vor jedem Test in dieser Untergruppe:
+             * Sende das Formular mit einer Benutzereingabe ab.
+             */
+            beforeEach(async () => {
+                // Kurzform zum setzen einer Benutzereingabe.
+                wrapper.setData({ item: 'Testeintrag' });
+                addItemButton = wrapper.find(".btn.btn-primary");
+                itemList = wrapper.find('.item-list');
+                inputField = wrapper.find('input');
+                await addItemButton.trigger('submit');
+            });
+
+            /**
+             * Prüfe, ob der neue Eintrag im items-Datenfeld vorhanden ist.
+             */
+            it ('Ein neuer Eintrag befindet sich im \'items\'-Datenattribut.', () => {
+                expect(wrapper.vm.items).to.contain('Testeintrag');
+            });
+
+            /**
+             * Prüfe, ob der neue Eintrag nun auch im Html-Code verfügbar ist.
+             */
+            it ('Der neue Eintrag befindet sich im gerenderten DOM.', () => {
+                expect(itemList.html()).to.contain('<td class="fs-4">Testeintrag</td>');
+            });
+
+            /**
+             * Prüfe, ob das item-Datenattribut und das Textfeld nach dem Absenden wieder leer sind.
+             */
+            it ('Das \'item\'-Datenattribut und das Textfeld sind nach dem Absenden wieder leer.', () => {
+                expect(wrapper.vm.item).to.equal('');
+                expect(inputField.element.value).to.equal('');
+            });
+
+            /**
+             * Prüfe, ob der Hinzufügen-Button nach dem Absenden nicht mehr zur Verfügung steht.
+             */
+            it ('Der Button \'Hinzufügen\' steht nach dem Absenden nicht mehr zur Verfügung.', () => {
+                expect(addItemButton.element.disabled).to.be.true;
+            });
+        });
     });
 });
