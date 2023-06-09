@@ -62,4 +62,37 @@ describe('App.vue-Component', () => {
         const addItemButton = wrapper.find(".btn.btn-primary");
         expect(addItemButton.element.disabled).to.be.true;
     });
+
+    /**
+     * Weitere Untergruppe für Tests nach Benutzereingaben.
+     */
+    describe("Die Benutzer:innen schreiben etwas in das Textfeld.", () => {
+        // Das Eingabefeld
+        let inputField;
+        /**
+         * Vor jedem Test innerhalb dieser Untergruppe:
+         * Suche das Eingabefeld im DOM, schreibe 'Testeintrag' dort hinein
+         * und sende den Inhalt ab.
+         */
+        beforeEach(async () => {
+            inputField = wrapper.find('input');
+            inputField.element.value = 'Testeintrag';
+            await inputField.trigger("input");
+        });
+
+        /**
+         * Das 'item'-Datenattribut in der App.vue-Component wird passend aktualisiert.
+         */
+        it ('Das \'item\'-Datenattribut wird aktualisiert.', () => {
+            expect(wrapper.vm.item).to.equal('Testeintrag');
+        });
+
+        /**
+         * Jetzt sollte der Hinzufügen-Button verfügbar sein.
+         */
+        it ('Der Button \'Hinzufügen\' steht bei Inhalten zur Verfügung.', () => {
+            const addItemButton = wrapper.find(".btn.btn-primary");
+            expect(addItemButton.element.disabled).to.be.false;
+        });
+    });
 });
